@@ -26,6 +26,7 @@ public class Result {
 
 	@Column(name = "result_val", nullable = false)
 	private String resultVal;
+	
 	@OneToMany(mappedBy = "result")
 	private List<Test> tests;
 

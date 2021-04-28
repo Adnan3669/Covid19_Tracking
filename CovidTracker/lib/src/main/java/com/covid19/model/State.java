@@ -2,6 +2,7 @@ package com.covid19.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -22,6 +23,7 @@ public class State {
 	
 	@Column(name = "state_name",length = 20,nullable = false)
 	private String stateName;
+	
 	
 	@OneToMany(mappedBy = "state")
 	private List<District> districts;
