@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,11 +31,11 @@ public class District
 	@Column(name = "district_name",length = 20,nullable = false)
 	private String districtName;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name = "state_id")
 	private State state;
 	
-	@OneToMany(mappedBy = "district")
+	@OneToMany(mappedBy = "district",fetch = FetchType.LAZY)
 	private List<Zone> zones;
 
 	public int getDistrictId() {

@@ -7,4 +7,6 @@ import com.covid19.model.Hospital;
 @Repository
 public interface HospitalRepository extends JpaRepository<Hospital, Integer> {
 
+	Hospital findByHospitalId(int hospitalId);
+
 }

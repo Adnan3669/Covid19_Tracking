@@ -14,12 +14,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 @Entity
 @Scope("prototype")
 @Component
-@Table(name = "Test")
+@Table(name = "Status")
 public class Status {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

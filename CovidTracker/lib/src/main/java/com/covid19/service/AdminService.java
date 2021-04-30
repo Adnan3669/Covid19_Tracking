@@ -9,4 +9,5 @@ public interface AdminService{
 	public Hospital addHospital(Hospital hospital) throws NoSuchAdminException;
 	public boolean removeHospitalById(int hospitalId) throws NoSuchHospitalException, NoSuchAdminException;
 	public Admin findAdminById(int adminId) throws NoSuchAdminException;
+	public Hospital getHospitalById(int hospitalId) throws NoSuchHospitalException;
 }

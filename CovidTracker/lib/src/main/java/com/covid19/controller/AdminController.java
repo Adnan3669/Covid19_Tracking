@@ -26,7 +26,7 @@ public class AdminController {
 	{
 		return service.addHospital(hospital);
 	}
-	@DeleteMapping(path = "/removeHospital",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(path = "/removeHospital")
 	public boolean addHospital(@RequestParam(name = "id") int hospitalId) throws NoSuchAdminException, NoSuchHospitalException
 	{
 		return service.removeHospitalById(hospitalId);
