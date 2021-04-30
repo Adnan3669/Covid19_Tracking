@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 @Component
 @Table(name = "Type")
-public class Type {
+public class HospitalType {
 	@Id
 	@GeneratedValue(strategy =GenerationType.IDENTITY)
 	@Column(name = "type_id")

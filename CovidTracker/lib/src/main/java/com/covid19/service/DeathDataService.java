@@ -2,12 +2,12 @@ package com.covid19.service;
 
 import java.util.Date;
 
-import com.covid19.model.Zone;
+import com.covid19.model.HospitalZone;
 
 public interface DeathDataService {
 	public int findMonthWiseDeath(Date date);
 
-	public int findDivisonByDeath(Zone zone);
+	public int findDivisonByDeath(HospitalZone hospitalZone);
 
 	public int findAgeByDeath(int age);
 

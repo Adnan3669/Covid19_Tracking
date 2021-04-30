@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 @Entity
@@ -33,7 +34,6 @@ public class Admin implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "admin_id")
 	private int adminId;
-	
 	
 	@Column(name="admin_fname",length =20, nullable = false )
 	private String adminFirstName;

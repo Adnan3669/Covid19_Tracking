@@ -1,4 +1,4 @@
-package com.covid19.service;
+package com.covid19.repository;
 
 import com.covid19.model.Patient;
 import com.covid19.model.Result;

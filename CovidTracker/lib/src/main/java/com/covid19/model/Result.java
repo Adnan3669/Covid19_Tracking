@@ -28,7 +28,7 @@ public class Result {
 	private String resultVal;
 	
 	@OneToMany(mappedBy = "result")
-	private List<Test> tests;
+	private List<CovidTest> covidTests;
 
 	public int getResultId() {
 		return resultId;
@@ -46,18 +46,18 @@ public class Result {
 		this.resultVal = resultVal;
 	}
 
-	public List<Test> getTests() {
-		return tests;
+	public List<CovidTest> getTests() {
+		return covidTests;
 	}
 
-	public void setTests(List<Test> tests) {
-		this.tests = tests;
+	public void setTests(List<CovidTest> covidTests) {
+		this.covidTests = covidTests;
 	}
 
-	public Result(String resultVal, List<Test> tests) {
+	public Result(String resultVal, List<CovidTest> covidTests) {
 		super();
 		this.resultVal = resultVal;
-		this.tests = tests;
+		this.covidTests = covidTests;
 	}
 
 	public Result() {

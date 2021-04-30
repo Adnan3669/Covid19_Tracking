@@ -1,7 +1,6 @@
 package com.covid19.model;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.context.annotation.Scope;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 @Entity

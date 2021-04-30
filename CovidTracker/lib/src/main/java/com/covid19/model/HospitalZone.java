@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 @Table(name = "Zone")
 @Component
 @Scope("prototype")
-public class Zone implements Serializable {
+public class HospitalZone implements Serializable {
 	@Id
 	@Column(name = "zone_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

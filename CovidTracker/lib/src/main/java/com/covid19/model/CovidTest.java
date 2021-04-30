@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 @Component
 @Table(name = "Test")
-public class Test {
+public class CovidTest {
 	@Id
 	@GeneratedValue(strategy =GenerationType.IDENTITY)
 	@Column(name = "test_id")
@@ -35,6 +35,14 @@ public class Test {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name ="result_id" )
 	private Result result;
+	
+	public int getTestId() {
+		return testId;
+	}
+
+	public void setTestId(int testId) {
+		this.testId = testId;
+	}
 
 	public LocalDate getTestDate() {
 		return testDate;
@@ -59,11 +67,11 @@ public class Test {
 	public void setResult(Result result) {
 		this.result = result;
 	}
-	public Test() {
+	public CovidTest() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Test(LocalDate testDate, Patient patient, Result result) {
+	public CovidTest(LocalDate testDate, Patient patient, Result result) {
 		super();
 		this.testDate = testDate;
 		this.patient = patient;

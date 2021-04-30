@@ -6,6 +6,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,6 +29,7 @@ public class Patient implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Id
 	@Column(name = "patient_id")
 	private int patientId;
@@ -42,23 +46,26 @@ public class Patient implements Serializable {
 	@Column(name = "patient_age", length = 3, nullable = false)
 	private int patientAge;
 
-	@Column(name = "patient_gender", length = 20, nullable = false)
+	@Column(name = "patient_gender", length = 1, nullable = false)
 	private String patientGender;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL,  fetch = FetchType.LAZY)
 	@JoinColumn(name = "hospital_id")
 	private Hospital hospital;
 	
-	@OneToMany(mappedBy = "patient")
-	private List<Test> test;
+	@OneToMany(mappedBy = "patient",  fetch = FetchType.LAZY)
+	private List<CovidTest> covidTest;
 	
-	@OneToMany(mappedBy = "patient")
+	@OneToMany(mappedBy = "patient",  fetch = FetchType.LAZY)
 	private List<Status> status;
 
 
-
+	public Patient() {
+		
+	}
+	
 	public Patient(String patientFirstName, String patientLastName, long patientMobileNo, int patientAge,
-			String patientGender, Hospital hospital, List<Test> test, List<Status> status) {
+			String patientGender, Hospital hospital, List<CovidTest> covidTest, List<Status> status) {
 		super();
 		this.patientFirstName = patientFirstName;
 		this.patientLastName = patientLastName;
@@ -66,7 +73,7 @@ public class Patient implements Serializable {
 		this.patientAge = patientAge;
 		this.patientGender = patientGender;
 		this.hospital = hospital;
-		this.test = test;
+		this.covidTest = covidTest;
 		this.status = status;
 	}
 
@@ -126,12 +133,12 @@ public class Patient implements Serializable {
 		this.hospital = hospital;
 	}
 
-	public List<Test> getTest() {
-		return test;
+	public List<CovidTest> getTest() {
+		return covidTest;
 	}
 
-	public void setTest(List<Test> test) {
-		this.test = test;
+	public void setTest(List<CovidTest> covidTest) {
+		this.covidTest = covidTest;
 	}
 
 	public List<Status> getStatus() {

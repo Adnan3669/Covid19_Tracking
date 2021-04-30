@@ -20,25 +20,25 @@ import com.covid19.service.AdminService;
 public class AdminController {
 	@Autowired
 	AdminService service;
-	
-	@PostMapping(path = "/addHospital",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public Hospital addHospital(@RequestBody Hospital hospital) throws NoSuchAdminException
-	{
+
+	@PostMapping(path = "/addHospital", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public Hospital addHospital(@RequestBody Hospital hospital) throws NoSuchAdminException {
 		return service.addHospital(hospital);
 	}
+
 	@DeleteMapping(path = "/removeHospital")
-	public boolean addHospital(@RequestParam(name = "id") int hospitalId) throws NoSuchAdminException, NoSuchHospitalException
-	{
+	public boolean addHospital(@RequestParam(name = "id") int hospitalId)
+			throws NoSuchAdminException, NoSuchHospitalException {
 		return service.removeHospitalById(hospitalId);
 	}
+
 	@ExceptionHandler
-	public String ExceptionHandler(NoSuchAdminException e)
-	{
+	public String ExceptionHandler(NoSuchAdminException e) {
 		return e.getMessage();
 	}
+
 	@ExceptionHandler
-	public String ExceptionHandler(NoSuchHospitalException e)
-	{
+	public String ExceptionHandler(NoSuchHospitalException e) {
 		return e.getMessage();
 	}
 }

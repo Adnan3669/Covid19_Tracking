@@ -36,7 +36,7 @@ public class District
 	private State state;
 	
 	@OneToMany(mappedBy = "district",fetch = FetchType.LAZY)
-	private List<Zone> zones;
+	private List<HospitalZone> hospitalZones;
 
 	public int getDistrictId() {
 		return districtId;
@@ -62,12 +62,12 @@ public class District
 		this.state = state;
 	}
 
-	public List<Zone> getZones() {
-		return zones;
+	public List<HospitalZone> getZones() {
+		return hospitalZones;
 	}
 
-	public void setZones(List<Zone> zones) {
-		this.zones = zones;
+	public void setZones(List<HospitalZone> hospitalZones) {
+		this.hospitalZones = hospitalZones;
 	}
 	
 }

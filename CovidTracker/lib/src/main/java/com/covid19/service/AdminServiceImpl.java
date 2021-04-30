@@ -36,7 +36,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public Hospital addHospital(Hospital hospital) throws NoSuchAdminException {
 		Admin admin = adminCredentials.adminCredentialsDetail();
-		
+
 		hospitalRepository.save(hospital);
 		admin.getHospitals().add(hospital);
 		adminRepository.save(admin);

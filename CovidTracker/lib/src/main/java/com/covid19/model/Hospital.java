@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,13 +37,13 @@ public class Hospital implements Serializable {
 	@Column(name = "hospital_name", length = 50, nullable = false)
 	private String hospitalName;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name = "zone_id")
-	private Zone hospitalZone;
+	private HospitalZone hospitalZone;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name = "type_id")
-	private Type hospitalType;
+	private HospitalType hospitalType;
 
 	@Column(name = "general_bed")
 	private int hospitalGeneralBed;
@@ -50,10 +51,10 @@ public class Hospital implements Serializable {
 	@Column(name = "icu_bed")
 	private int hospitalIcuBed;
 
-	@ManyToMany(mappedBy = "hospitals")
+	@ManyToMany(mappedBy = "hospitals",fetch = FetchType.LAZY)
 	private List<Admin> admins;
 
-	@OneToMany(mappedBy = "hospital")
+	@OneToMany(mappedBy = "hospital",fetch = FetchType.LAZY)
 	private List<Patient> patients;
 
 	public int getHospitalId() {
@@ -72,19 +73,19 @@ public class Hospital implements Serializable {
 		this.hospitalName = hospitalName;
 	}
 
-	public Zone getHospitalZone() {
+	public HospitalZone getHospitalZone() {
 		return hospitalZone;
 	}
 
-	public void setHospitalZone(Zone hospitalZone) {
+	public void setHospitalZone(HospitalZone hospitalZone) {
 		this.hospitalZone = hospitalZone;
 	}
 
-	public Type getHospitalType() {
+	public HospitalType getHospitalType() {
 		return hospitalType;
 	}
 
-	public void setHospitalType(Type hospitalType) {
+	public void setHospitalType(HospitalType hospitalType) {
 		this.hospitalType = hospitalType;
 	}
 
