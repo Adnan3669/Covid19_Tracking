@@ -1,4 +1,4 @@
-package com.covid19;
+package com.covid19.controller;
 
 import java.time.LocalDate;
 
