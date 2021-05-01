@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,12 +14,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Entity
-@Table(name = "Zone")
+@Table(name = "HospitalZone")
 @Component
 @Scope("prototype")
 public class HospitalZone implements Serializable {
@@ -26,15 +30,19 @@ public class HospitalZone implements Serializable {
 	@Column(name = "zone_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int zoneId;
-
+	
+	@NotBlank
+	@Pattern(regexp = "[A-Za-z0-9]+$", message = "Invalid Characters entered for Hospital Zone")
 	@Column(name = "zone_name", length = 20, nullable = false)
 	private String zoneName;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@Valid
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name = "district_id")
 	private District district;
-	
-	@OneToMany(mappedBy = "hospitalZone")
+
+	@Valid
+	@OneToMany(mappedBy = "hospitalZone",fetch = FetchType.LAZY)
 	private List<Hospital> hospitals;
 
 	public int getZoneId() {

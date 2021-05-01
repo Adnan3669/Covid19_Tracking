@@ -48,7 +48,7 @@ public class AdminServiceTestImplUsingMockito {
 		when(hospitalRepository.save(hospital)).thenReturn(hospital);
 		when(adminRepository.save(admin)).thenReturn(admin);
 
-		Hospital expectedHospital = adminService.addHospital(hospital);
+		Hospital expectedHospital = adminService.addHospital(1,hospital);
 
 		assertEquals(hospital, expectedHospital);
 	}

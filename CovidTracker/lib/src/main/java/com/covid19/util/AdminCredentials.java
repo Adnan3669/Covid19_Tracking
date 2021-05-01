@@ -5,15 +5,16 @@ import org.springframework.stereotype.Component;
 
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.model.Admin;
+import com.covid19.repository.AdminRepository;
 import com.covid19.service.AdminService;
 
 @Component
 public class AdminCredentials {
 
 	@Autowired
-	AdminService service;
+	AdminRepository adminRepository;
 	public Admin adminCredentialsDetail() throws NoSuchAdminException {
-		return service.findAdminById(1);
+		return adminRepository.findByAdminId(1);
 		
 	}
 }

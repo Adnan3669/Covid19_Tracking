@@ -14,7 +14,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
+import org.checkerframework.checker.index.qual.Positive;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -29,33 +33,45 @@ public class Patient implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Id
 	@Column(name = "patient_id")
 	private int patientId;
-
-	@Column(name = "patient_fname", length = 20, nullable = false)
+	
+	@NotBlank
+	@Pattern(regexp = "[A-Z][a-z]*",message ="Patient First Name is not appropriate" )
+	@Column(name = "patient_fname", length = 20)
 	private String patientFirstName;
 
-	@Column(name = "patient_lname", length = 20, nullable = false)
+	@Pattern(regexp = "[A-Z]+([ '-][a-zA-Z]+)*",message = "Patient First Name is not appropriate")
+	@Column(name = "patient_lname", length = 20)
 	private String patientLastName;
 
-	@Column(name = "patient_mobileno", length = 10, nullable = false)
+	@Pattern(regexp = "^[0-9]{10}$",message = "Inappropriate mobile number entered!")
+	@Column(name = "patient_mobileno", length = 10)
 	private long patientMobileNo;
 
-	@Column(name = "patient_age", length = 3, nullable = false)
+	
+	@Positive
+	@Column(name = "patient_age", length = 3)
 	private int patientAge;
 
-	@Column(name = "patient_gender", length = 1, nullable = false)
+	@NotBlank
+	@Pattern(regexp = "^M(ale)?$|^F(emale)?$",message = "Input can be Male or Female ")
+	@Column(name = "patient_gender")
 	private String patientGender;
 
+	@Valid
 	@ManyToOne(cascade = CascadeType.ALL,  fetch = FetchType.LAZY)
 	@JoinColumn(name = "hospital_id")
 	private Hospital hospital;
 	
+	@Valid
 	@OneToMany(mappedBy = "patient",  fetch = FetchType.LAZY)
 	private List<CovidTest> covidTest;
 	
+	@Valid
 	@OneToMany(mappedBy = "patient",  fetch = FetchType.LAZY)
 	private List<Status> status;
 

@@ -28,7 +28,7 @@ public class AdminServiceTestImpl {
 		hospital.setHospitalGeneralBed(10);
 		hospital.setHospitalICUBed(10);
 		hospital.setHospitalName("Jairam Hospital");
-		Hospital expectedHospital=adminService.addHospital(hospital);
+		Hospital expectedHospital=adminService.addHospital(1,hospital);
 		Hospital actualHospital=adminService.getHospitalById(hospital.getHospitalId());
 		assertEquals(expectedHospital, actualHospital);
 	}
@@ -49,7 +49,7 @@ public class AdminServiceTestImpl {
 		hospital.setHospitalGeneralBed(10);
 		hospital.setHospitalICUBed(10);
 		hospital.setHospitalName("Jairam Hospital");
-		hospital=adminService.addHospital(hospital);
+		hospital=adminService.addHospital(1,hospital);
 		boolean flag= adminService.removeHospitalById(hospital.getHospitalId());
 		assertTrue(flag);
 	

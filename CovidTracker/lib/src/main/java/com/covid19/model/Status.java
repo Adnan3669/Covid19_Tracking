@@ -11,8 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 @Entity
@@ -22,21 +24,27 @@ import org.springframework.stereotype.Component;
 public class Status {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "status_id")
 	private int statusId;
-
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "confirm_date")
 	private LocalDate confirmDate;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "isolation_date")
 	private LocalDate isolationDate;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "recovered_date")
 	private LocalDate recoveredDate;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "death_date")
 	private LocalDate deathDate;
 
+	@Valid
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "patient_id")
 	private Patient patient;

@@ -15,10 +15,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 @Entity
 @Scope("prototype")
@@ -34,27 +39,36 @@ public class Hospital implements Serializable {
 	@Column(name = "hospital_id")
 	private int hospitalId;
 
-	@Column(name = "hospital_name", length = 50, nullable = false)
+	@NotBlank
+	@Pattern(regexp = "[A-Z][a-z]*", message = "Hospital name should be Alphabhetic only")
+	@Size(min = 3, max = 50, message = "Hospital name is not in range")
+	@Column(name = "hospital_name", length = 50)
 	private String hospitalName;
 
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@Valid
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "zone_id")
 	private HospitalZone hospitalZone;
 
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@Valid
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "type_id")
 	private HospitalType hospitalType;
 
+	@PositiveOrZero( message = "Entered  General Bed Count is not in Range")
 	@Column(name = "general_bed")
 	private int hospitalGeneralBed;
 
+	@PositiveOrZero(message = "Entered  Icu Bed Count is not in Range")
 	@Column(name = "icu_bed")
 	private int hospitalIcuBed;
 
-	@ManyToMany(mappedBy = "hospitals",fetch = FetchType.LAZY)
+	
+	@ManyToMany(mappedBy = "hospitals", fetch = FetchType.LAZY)
 	private List<Admin> admins;
 
-	@OneToMany(mappedBy = "hospital",fetch = FetchType.LAZY)
+	@Valid
+	@OneToMany(mappedBy = "hospital", fetch = FetchType.LAZY)
 	private List<Patient> patients;
 
 	public int getHospitalId() {

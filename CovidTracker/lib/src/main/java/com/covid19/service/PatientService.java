@@ -1,21 +1,24 @@
 package com.covid19.service;
 
-import com.covid19.model.Patient;
-import com.covid19.model.Result;
-import com.covid19.model.Status;
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+
+import com.covid19.exceptions.DateIsNotAppropriate;
+import com.covid19.exceptions.NoSuchHospitalException;
+import com.covid19.exceptions.NoSuchPatientException;
+import com.covid19.exceptions.NoSuchStatusException;
 import com.covid19.model.CovidTest;
+import com.covid19.model.Patient;
+import com.covid19.model.Status;
 
 public interface PatientService {
-	public Patient addPatient(int hospitalId, Patient patient);
+	public Patient addPatient(@Positive int hospitalId, @Valid Patient patient) throws NoSuchHospitalException;
 
-	public Patient modifyPatient(Patient patient);
+	public Patient modifyPatient(@Valid Patient patient) throws NoSuchPatientException;
 
-	public CovidTest addPatientTestDetails(int patientId, CovidTest covidTest);
+	public CovidTest addPatientTestDetails(int patientId, CovidTest covidTest) throws NoSuchPatientException;
 
-	public Status addPatientStatus(int patientId, Status status);
+	public Status addPatientStatus(@Positive int patientId,@Valid Status status) throws NoSuchPatientException;
 
-	public Status modifyPatientStatus(Status status);
-
-	public Result addResult(Result result);
-
+	public Status modifyPatientStatus(@Valid Status status) throws NoSuchStatusException, DateIsNotAppropriate;
 }

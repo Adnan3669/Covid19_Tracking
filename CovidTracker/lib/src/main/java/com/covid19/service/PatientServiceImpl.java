@@ -1,18 +1,27 @@
 package com.covid19.service;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.covid19.exceptions.DateIsNotAppropriate;
+import com.covid19.exceptions.NoSuchHospitalException;
+import com.covid19.exceptions.NoSuchPatientException;
+import com.covid19.exceptions.NoSuchStatusException;
+import com.covid19.model.CovidTest;
 import com.covid19.model.Hospital;
 import com.covid19.model.Patient;
-import com.covid19.model.Result;
 import com.covid19.model.Status;
-import com.covid19.model.CovidTest;
 import com.covid19.repository.HospitalRepository;
 import com.covid19.repository.PatientRepository;
-import com.covid19.repository.ResultRepository;
-import com.covid19.repository.StatusRepository;
 import com.covid19.repository.PatientTestRepository;
+import com.covid19.repository.StatusRepository;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -23,51 +32,108 @@ public class PatientServiceImpl implements PatientService {
 	private HospitalRepository hospitalRepository;
 	@Autowired
 	private PatientTestRepository patientTestRepository;
-	@Autowired
-	private ResultRepository resultRepository;
+
 	@Autowired
 	private StatusRepository statusRepository;
-	
+
+	Logger logger = LoggerFactory.getLogger(PatientServiceImpl.class);
+
 	@Override
-	public Patient addPatient(int hospitalId, Patient patient) {
+	public Patient addPatient(@Positive int hospitalId, @Valid Patient patient) throws NoSuchHospitalException {
+		logger.info("For adding PATIENT");
 		Hospital hospital = hospitalRepository.findByHospitalId(hospitalId);
-		patient.setHospital(hospital);
-		patientRepository.save(patient);
-		return patient;
-	}
-
-	@Override
-	public Patient modifyPatient(Patient patient) {
-		Patient modifypatient = patientRepository.findByPatientId(patient.getPatientId());
-		if(!modifypatient.getPatientFirstName().equals(patient.getPatientFirstName())) {
-			modifypatient.setPatientFirstName(patient.getPatientFirstName());
+		if (hospital != null) {
+			patient.setHospital(hospital);
+			patientRepository.save(patient);
+			return patient;
+		} else {
+			throw new NoSuchHospitalException("No Such Hospital Exists");
 		}
-		return patientRepository.save(modifypatient);
 	}
 
 	@Override
-	public CovidTest addPatientTestDetails(int patientId, CovidTest covidTest) {
+	public Patient modifyPatient(@Valid Patient patient) throws NoSuchPatientException {
+		logger.info("For modifying PATIENT");
+
+		Patient modifypatient = patientRepository.findByPatientId(patient.getPatientId());
+		if (modifypatient != null) {
+			if (!modifypatient.getPatientFirstName().equals(patient.getPatientFirstName())) {
+				modifypatient.setPatientFirstName(patient.getPatientFirstName());
+			}
+			if (!modifypatient.getPatientLastName().equals(patient.getPatientLastName())) {
+				modifypatient.setPatientLastName(patient.getPatientLastName());
+			}
+			if (!(modifypatient.getPatientAge() == patient.getPatientAge())) {
+				modifypatient.setPatientAge(patient.getPatientAge());
+			}
+			if (!(modifypatient.getPatientMobileNo() == patient.getPatientMobileNo())) {
+				modifypatient.setPatientMobileNo(patient.getPatientMobileNo());
+			}
+			if (!modifypatient.getPatientGender().equals(patient.getPatientGender())) {
+				modifypatient.setPatientGender(patient.getPatientGender());
+			}
+			return patientRepository.save(modifypatient);
+		} else {
+			throw new NoSuchPatientException("No Such Patient Exist");
+		}
+	}
+
+	@Override
+	public CovidTest addPatientTestDetails(@Positive int patientId, @Valid CovidTest covidTest)
+			throws NoSuchPatientException {
+		logger.info("For adding PATIENT test details");
 		Patient patient = patientRepository.findByPatientId(patientId);
-		covidTest.setPatient(patient);
-		patientTestRepository.save(covidTest);
-		return covidTest;
+		if (patient != null) {
+			covidTest.setPatient(patient);
+			patientTestRepository.save(covidTest);
+			return covidTest;
+		} else {
+			throw new NoSuchPatientException("No Such Patient Exist");
+		}
 	}
-	
+
 	@Override
-	public Status addPatientStatus(int patientId, Status status) {
+	public Status addPatientStatus(@Positive int patientId, @Valid Status status) throws NoSuchPatientException {
+		logger.info("For adding PATIENT status");
+
 		Patient patient = patientRepository.findByPatientId(patientId);
-		status.setPatient(patient);
-		statusRepository.save(status);
-		return status;
+		if (patient != null) {
+			status.setPatient(patient);
+			statusRepository.save(status);
+			return status;
+		} else {
+			throw new NoSuchPatientException("No Such Patient Exist");
+		}
 	}
 
 	@Override
-	public Status modifyPatientStatus(Status status) {
-		return statusRepository.save(status);
-	}
+	public Status modifyPatientStatus(@Valid Status status) throws NoSuchStatusException, DateIsNotAppropriate {
+		logger.info("For modifying PATIENT status");
 
-	@Override
-	public Result addResult(Result result) {
-		return resultRepository.save(result);
+		Status modifiedStatus = statusRepository.findStatusById(status.getStatusId());
+		if (modifiedStatus != null) {
+			if (((status.getConfirmDate().isBefore(status.getIsolationDate())
+					|| status.getConfirmDate().isEqual(status.getIsolationDate())) && status.getConfirmDate() != null
+					&& status.getIsolationDate() != null)
+					&& !(status.getRecoveredDate() != null && status.getIsolationDate() != null)) {
+
+				if (!modifiedStatus.getConfirmDate().equals(status.getConfirmDate())) {
+					modifiedStatus.setConfirmDate(status.getConfirmDate());
+				}
+				if (!modifiedStatus.getIsolationDate().equals(status.getIsolationDate())) {
+					modifiedStatus.setIsolationDate(status.getIsolationDate());
+				}
+					modifiedStatus.setRecoveredDate(status.getRecoveredDate());
+					modifiedStatus.setDeathDate(status.getDeathDate());
+				
+				return statusRepository.save(modifiedStatus);
+			} else {
+				throw new DateIsNotAppropriate("Date property is not appropriate");
+			}
+
+		}
+		else {
+			throw new NoSuchStatusException("No Status with given id");
+		}
 	}
 }

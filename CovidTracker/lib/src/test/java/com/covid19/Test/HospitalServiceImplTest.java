@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.covid19.exceptions.NoSuchAdminException;
+import com.covid19.exceptions.NoSuchHospitalException;
 import com.covid19.exceptions.NoSuchTypeException;
 import com.covid19.exceptions.NoSuchZoneException;
 import com.covid19.model.Hospital;
@@ -44,7 +45,7 @@ public class HospitalServiceImplTest {
 		hospitalType.setTypeName("Goverment1");
 		hospitalType = hospitalService.addHospitalType(hospitalType);
 		hospital.setHospitalType(hospitalType);
-		Hospital expectedHospital = adminService.addHospital(hospital);
+		Hospital expectedHospital = adminService.addHospital(1,hospital);
 		boolean value = hospitalService.findHospitalByType("Goverment1").contains(expectedHospital);
 		assertTrue(value);
 	}
@@ -55,7 +56,7 @@ public class HospitalServiceImplTest {
 		hospitalZone.setZoneName("Borivali");
 		hospitalZone = hospitalService.addHospitalZone(hospitalZone);
 		hospital.setHospitalZone(hospitalZone);
-		Hospital expectedHospital = adminService.addHospital(hospital);
+		Hospital expectedHospital = adminService.addHospital(1,hospital);
 		boolean value = hospitalService.findHospitalByZone("Borivali").contains(expectedHospital);
 		assertTrue(value);
 	}
@@ -63,7 +64,7 @@ public class HospitalServiceImplTest {
 	@Test
 	public void testfindAllHospital() throws NoSuchAdminException {
 		hospital.setHospitalName("ZYZ");
-		Hospital expectedHospital = adminService.addHospital(hospital);
+		Hospital expectedHospital = adminService.addHospital(1,hospital);
 		boolean value = hospitalService.findAllHospitals().contains(expectedHospital);
 		assertTrue(value);
 	}
@@ -73,15 +74,15 @@ public class HospitalServiceImplTest {
 		hospital.setHospitalName("ZYZ");
 		hospital.setHospitalGeneralBed(0);
 		hospital.setHospitalICUBed(0);
-		Hospital expectedHospital = adminService.addHospital(hospital);
+		Hospital expectedHospital = adminService.addHospital(1,hospital);
 		boolean value = hospitalService.findHospitalByFreeBeds().contains(expectedHospital);
 		assertFalse(value);
 	}
 
 	@Test
-	public void testmodifyHospital() throws NoSuchAdminException {
+	public void testmodifyHospital() throws NoSuchAdminException, NoSuchHospitalException {
 		hospital.setHospitalName("ZYZ");
-		Hospital expectedHospital = adminService.addHospital(hospital);
+		Hospital expectedHospital = adminService.addHospital(1,hospital);
 		expectedHospital.setHospitalName("abc");
 		expectedHospital = hospitalService.modifyHospital(expectedHospital);
 		assertNotEquals(expectedHospital.getHospitalName(), "ZYZ");
