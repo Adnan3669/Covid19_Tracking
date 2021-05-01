@@ -19,12 +19,8 @@ public interface StatusRepository extends JpaRepository<Status, Integer> {
 	@Query("Select count(a) From Status a")
 	public int findTotalCases();
 
-	
-	/*@Query(SELECT * FROM Status AS "Users"
-			WHERE "Users"."created_date" >= NOW() - INTERVAL '24 HOURS'
-			ORDER BY "Users"."created_date" DESC)*/
-	@Query("Select count (a) From Status a Where a.confirmDate between :currentDate and :passedDate")
-	public int findTotalCasesIn24Hrs(@Param("currentDate") LocalDate currentDate, @Param("passedDate") LocalDate passedDate);
+	@Query("Select count(a) From Status a Where a.confirmDate = :currentDate or a.confirmDate =:passedDate")
+    public int findTotalCasesIn24Hrs(@Param("currentDate") LocalDate currentDate, @Param("passedDate") LocalDate passedDate);
 	
 	@Query("Select count(a) From CovidTest a")
 	public int findTotalLabTest();
@@ -48,11 +44,13 @@ public interface StatusRepository extends JpaRepository<Status, Integer> {
 	@Query("Select count(s) from Status s where s.patient.hospital.hospitalId=:hospitalId and s.confirmDate=:date")
 	public Integer findTotalCasesinParticularDate(@Param("date") LocalDate date,@Param("hospitalId") int hospitalId);
 	
-	@Query("Select count(s) from Status s where s.patient.hospital.hospitalId=:hospitalId and s.isolationDate<=:date and s.deathDate is null and s.recoveredDate is null")
-	public Integer findTotalActiveinParticularDate(@Param("date") LocalDate date,@Param("hospitalId") int hospitalId);
+	@Query("Select count(s) from Status s where s.patient.hospital.hospitalId=:hospitalId and s.isolationDate<=:date and (s.recoveredDate >:date or s.deathDate>:date or (s.deathDate is null and s.recoveredDate is null))")
+    public Integer findTotalActiveinParticularDate(@Param("date") LocalDate date,@Param("hospitalId") int hospitalId);
+   
 	
 	@Query("Select count(s) from Status s where s.patient.hospital.hospitalId=:hospitalId and s.recoveredDate=:date")
 	public Integer findTotalRecoveredinParticularDate(@Param("date") LocalDate date,@Param("hospitalId") int hospitalId);
+	
 	@Query("Select count(s) from Status s where s.patient.hospital.hospitalId=:hospitalId and s.deathDate=:date")
 	public Integer findTotalDeathinParticularDate(@Param("date") LocalDate date,@Param("hospitalId") int hospitalId);
 
