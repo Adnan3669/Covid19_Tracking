@@ -1,7 +1,5 @@
 package com.covid19.service;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 

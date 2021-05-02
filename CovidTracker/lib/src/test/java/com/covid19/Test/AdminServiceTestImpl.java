@@ -38,7 +38,7 @@ public class AdminServiceTestImpl {
 	{
 		assertThrows(NoSuchHospitalException.class, ()->{
 			
-			adminService.getHospitalById(-1);
+			adminService.getHospitalById(10000);
 		});
 		
 	}
@@ -59,7 +59,7 @@ public class AdminServiceTestImpl {
 	public void TestRemoveHospitalByIdThrowsNoSuchHospitalException() throws NoSuchAdminException, NoSuchHospitalException
 	{
 	assertThrows(NoSuchHospitalException.class, ()->{
-		adminService.removeHospitalById(-1);
+		adminService.removeHospitalById(10000);
 
 	});
 

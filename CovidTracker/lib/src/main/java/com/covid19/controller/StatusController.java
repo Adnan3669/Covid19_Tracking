@@ -1,15 +1,21 @@
 package com.covid19.controller;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.covid19.service.UserService;
@@ -32,6 +38,7 @@ public class StatusController {
 		return new ResponseEntity<Integer>(service.findTotalCases(), HttpStatus.ACCEPTED);
 	}
 
+	//http://localhost:9090/CovidTracker.com/status/totalcasesIn24Hrs
 	@GetMapping(path = "/totalcasesIn24Hrs", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Integer> findTotalCasesIn24Hrs()
 
@@ -42,6 +49,7 @@ public class StatusController {
 				HttpStatus.ACCEPTED);
 	}
 
+	//http://localhost:9090/CovidTracker.com/status/totalLabCases
 	@GetMapping(path = "/totalLabCases", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Integer> findTotalLabTest()
 
@@ -51,6 +59,7 @@ public class StatusController {
 		return new ResponseEntity<Integer>(service.findTotalLabTest(), HttpStatus.ACCEPTED);
 	}
 
+	//http://localhost:9090/CovidTracker.com/status/totalRecoverCases
 	@GetMapping(path = "/totalRecoverCases", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Integer> findTotalRecoverdCases()
 
@@ -60,6 +69,7 @@ public class StatusController {
 		return new ResponseEntity<Integer>(service.findTotalRecoveredCases(), HttpStatus.ACCEPTED);
 	}
 
+	//http://localhost:9090/CovidTracker.com/status/totalPatientInIsolation
 	@GetMapping(path = "/totalPatientInIsolation", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Integer> findTotalPatientInIsolation()
 
@@ -76,6 +86,16 @@ public class StatusController {
 		logger.info("For getting details of total DEATHS due to COVID19");
 
 		return new ResponseEntity<Integer>(service.findTotalDeath(), HttpStatus.ACCEPTED);
+	}
+	
+	//http://localhost:9090/CovidTracker.com/status/totalDataBasedOnZoneAndDate?zoneName=pune&date=2021-05-01
+	@GetMapping(path = "/totalDataBasedOnZoneAndDate", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<String>> findTotalDataBasedOnZoneAndDate(@RequestParam("zoneName") @Pattern(regexp = "[A-Za-z0-9]+$") @NotNull String zoneName,@RequestParam("date") @NotNull @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate date)
+
+	{
+		logger.info("For getting details of total Data Based On Zone And Date");
+
+		return new ResponseEntity<>(service.findTotalDataBasedOnZoneAndDate(zoneName,date),HttpStatus.ACCEPTED);
 	}
 
 }

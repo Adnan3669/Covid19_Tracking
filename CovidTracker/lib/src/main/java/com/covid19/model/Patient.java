@@ -40,11 +40,11 @@ public class Patient implements Serializable {
 	private int patientId;
 	
 	@NotBlank
-	@Pattern(regexp = "[A-Z][a-z]*",message ="Patient First Name is not appropriate" )
+	@Pattern(regexp = "[A-Za-z]*",message ="Patient First Name is not appropriate" )
 	@Column(name = "patient_fname", length = 20)
 	private String patientFirstName;
 
-	@Pattern(regexp = "[A-Z]+([ '-][a-zA-Z]+)*",message = "Patient First Name is not appropriate")
+	@Pattern(regexp = "[A-Za-z'.\\s]+$",message = "Patient First Name is not appropriate")
 	@Column(name = "patient_lname", length = 20)
 	private String patientLastName;
 
@@ -58,7 +58,7 @@ public class Patient implements Serializable {
 	private int patientAge;
 
 	@NotBlank
-	@Pattern(regexp = "^M(ale)?$|^F(emale)?$",message = "Input can be Male or Female ")
+	@Pattern(regexp = "^Male?$|^Female?$",message = "Input can be Male or Female ")
 	@Column(name = "patient_gender")
 	private String patientGender;
 

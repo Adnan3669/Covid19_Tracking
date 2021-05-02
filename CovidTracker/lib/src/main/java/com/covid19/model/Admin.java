@@ -46,11 +46,12 @@ public class Admin implements Serializable {
 	@Column(name = "admin_lname", length = 20, nullable = false)
 	private String adminLastName;
 
-	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",message = "Minimum eight characters, at least one letter and one number")
+	@NotBlank
+	//@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",message = "Minimum eight characters, at least one letter and one number")
 	@Column(name = "admin_pass", nullable = false)
 	private String adminPassword;
 	
-	
+	@NotBlank
 	@Column(name = "admin_username", length = 20, nullable = false)
 	private String adminUserName;
 

@@ -23,7 +23,6 @@ import javax.validation.constraints.Size;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.annotation.Validated;
 
 @Entity
 @Scope("prototype")
@@ -40,7 +39,7 @@ public class Hospital implements Serializable {
 	private int hospitalId;
 
 	@NotBlank
-	@Pattern(regexp = "[A-Z][a-z]*", message = "Hospital name should be Alphabhetic only")
+	@Pattern(regexp = "[a-zA-Z\\s]*$", message = "Hospital name should be Alphabhetic only")
 	@Size(min = 3, max = 50, message = "Hospital name is not in range")
 	@Column(name = "hospital_name", length = 50)
 	private String hospitalName;
@@ -55,7 +54,7 @@ public class Hospital implements Serializable {
 	@JoinColumn(name = "type_id")
 	private HospitalType hospitalType;
 
-	@PositiveOrZero( message = "Entered  General Bed Count is not in Range")
+	@PositiveOrZero(message = "Entered  General Bed Count is not in Range")
 	@Column(name = "general_bed")
 	private int hospitalGeneralBed;
 
@@ -63,7 +62,6 @@ public class Hospital implements Serializable {
 	@Column(name = "icu_bed")
 	private int hospitalIcuBed;
 
-	
 	@ManyToMany(mappedBy = "hospitals", fetch = FetchType.LAZY)
 	private List<Admin> admins;
 

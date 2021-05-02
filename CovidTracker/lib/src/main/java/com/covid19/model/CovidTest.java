@@ -76,7 +76,6 @@ public class CovidTest {
 	}
 
 	public CovidTest() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public CovidTest(LocalDate testDate, Patient patient, String result) {
