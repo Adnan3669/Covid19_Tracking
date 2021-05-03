@@ -15,6 +15,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.exceptions.NoSuchHospitalException;
+import com.covid19.exceptions.NoSuchTypeException;
+import com.covid19.exceptions.NoSuchZoneException;
 import com.covid19.model.Admin;
 import com.covid19.model.Hospital;
 import com.covid19.repository.AdminRepository;
@@ -38,7 +40,7 @@ public class AdminServiceTestImplUsingMockito {
 	Admin admin;
 
 	@Test
-	public void TestAddHospital() throws NoSuchAdminException {
+	public void TestAddHospital() throws NoSuchAdminException, NoSuchTypeException, NoSuchZoneException {
 
 		hospital.setHospitalId(1);
 		hospital.setHospitalGeneralBed(10);
@@ -48,7 +50,7 @@ public class AdminServiceTestImplUsingMockito {
 		when(hospitalRepository.save(hospital)).thenReturn(hospital);
 		when(adminRepository.save(admin)).thenReturn(admin);
 		
-		Hospital expectedHospital = adminService.addHospital(1,hospital);
+		Hospital expectedHospital = adminService.addHospital(1,hospital, 0, 0);
 
 		assertEquals(hospital, expectedHospital);
 	}

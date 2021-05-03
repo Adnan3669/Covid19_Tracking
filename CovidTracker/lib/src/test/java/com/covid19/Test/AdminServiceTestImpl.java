@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import javax.transaction.Transactional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,7 +16,6 @@ import com.covid19.exceptions.NoSuchHospitalException;
 import com.covid19.exceptions.NoSuchTypeException;
 import com.covid19.exceptions.NoSuchZoneException;
 import com.covid19.model.Hospital;
-import com.covid19.repository.HospitalTypeRepositary;
 import com.covid19.service.AdminService;
 @SpringBootTest
  class AdminServiceTestImpl {
@@ -24,16 +24,22 @@ import com.covid19.service.AdminService;
 	AdminService adminService;
 	@Autowired
 	Hospital hospital;
-	@Transactional
-	@Test
-	 void TestAddHospitalAndGetHospital() throws NoSuchAdminException, NoSuchHospitalException, NoSuchTypeException, NoSuchZoneException
+	
+	@BeforeEach
+	 void setup() throws NoSuchAdminException, NoSuchTypeException, NoSuchZoneException
 	{
 		hospital.setHospitalGeneralBed(10);
 		hospital.setHospitalICUBed(10);
 		hospital.setHospitalName("Jairam Hospital");
-		Hospital expectedHospital = adminService.addHospital(7,hospital, 2, 97);
+		hospital = adminService.addHospital(7,hospital, 2, 97);
+	}
+	@Transactional
+	@Test
+	 void TestAddHospitalAndGetHospital() throws NoSuchAdminException, NoSuchHospitalException, NoSuchTypeException, NoSuchZoneException
+	{
+		
 		Hospital actualHospital=adminService.getHospitalById(hospital.getHospitalId());
-		assertEquals(expectedHospital, actualHospital);
+		assertEquals(hospital, actualHospital);
 	}
 	@Transactional
 	@Test

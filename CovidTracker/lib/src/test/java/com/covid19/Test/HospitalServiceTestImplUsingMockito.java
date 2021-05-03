@@ -106,32 +106,5 @@ public class HospitalServiceTestImplUsingMockito {
 		assertEquals(expectedHospital, hospitalList);
 	}
 
-	@Autowired
-	List<Hospital> hospitalList;
-
-	@Test
-	public void testmodifyHospital() throws NoSuchAdminException, NoSuchHospitalException {
-		admin.setAdminId(1);
-		admin.setHospitals(hospitalList);
-		admin.setAdminFirstName("sdg");
-		admin.setAdminLastName("xgd");
-		hospital.setHospitalId(1);
-		hospital.setHospitalGeneralBed(10);
-		hospital.setHospitalICUBed(10);
-		hospital.setHospitalName("Jairam Hospital");
-		when(adminRepository.findByAdminId(admin.getAdminId())).thenReturn(admin);
-		when(hospitalRepository.save(hospital)).thenReturn(hospital);
-
-		admin.getHospitals().add(hospital);
-		when(adminRepository.save(admin)).thenReturn(admin);
-
-		Hospital actualHospital = adminService.addHospital(admin.getAdminId(), hospital);
-		hospital.setHospitalName("abc");
-		when(hospitalRepository.findByHospitalId(hospital.getHospitalId())).thenReturn(hospital);
-		when(hospitalRepository.save(hospital)).thenReturn(hospital);
-
-		Hospital expectedHospital = hospitalService.modifyHospital(hospital);
-		assertNotEquals("Jairam Hospital", expectedHospital.getHospitalName());
-
-	}
+	
 }

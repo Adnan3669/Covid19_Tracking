@@ -89,14 +89,27 @@ public class PatientServiceImpl implements PatientService {
 	}
 
 	@Override
-	public Status addPatientStatus(@Positive int patientId, @Valid Status status) throws NoSuchPatientException {
+	public Status addPatientStatus(@Positive int patientId, @Valid Status status)
+			throws NoSuchPatientException, DateIsNotAppropriate {
 		logger.info("For adding PATIENT status");
 
 		Patient patient = patientRepository.findByPatientId(patientId);
 		if (patient != null) {
-			status.setPatient(patient);
-			statusRepository.save(status);
-			return status;
+			if (((status.getConfirmDate().isBefore(status.getIsolationDate())
+					|| status.getConfirmDate().isEqual(status.getIsolationDate())) && status.getConfirmDate() != null
+					&& status.getIsolationDate() != null)
+					&& !(status.getRecoveredDate() != null && status.getDeathDate() != null)) {
+
+				status.setConfirmDate(status.getConfirmDate());
+				status.setIsolationDate(status.getIsolationDate());
+				status.setRecoveredDate(status.getRecoveredDate());
+				status.setDeathDate(status.getDeathDate());
+				status.setPatient(patient);
+				return statusRepository.save(status);
+			} else {
+				throw new DateIsNotAppropriate("Date property is not appropriate");
+			}
+
 		} else {
 			throw new NoSuchPatientException("No Such Patient Exist");
 		}
