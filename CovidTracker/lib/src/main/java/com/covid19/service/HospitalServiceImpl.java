@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import com.covid19.exceptions.NoSuchHospitalException;
 import com.covid19.exceptions.NoSuchTypeException;
 import com.covid19.exceptions.NoSuchZoneException;
 import com.covid19.model.Hospital;
@@ -38,25 +37,7 @@ public class HospitalServiceImpl implements HospitalService {
 
 	Logger logger = LoggerFactory.getLogger(HospitalServiceImpl.class);
 
-	@Override
-	public Hospital modifyHospital(@Valid Hospital hospital) throws NoSuchHospitalException {
-		logger.info("For modifying HOSPITAL");
 
-		Hospital modifiableHospital = hospitalRepository.findByHospitalId(hospital.getHospitalId());
-		if (modifiableHospital != null) {
-			modifiableHospital.setHospitalGeneralBed(hospital.getHospitalGeneralBed());
-			modifiableHospital.setHospitalICUBed(hospital.getHospitalICUBed());
-			modifiableHospital.setHospitalName(hospital.getHospitalName());
-			if(hospital.getHospitalType()!=null)
-			modifiableHospital.setHospitalType(hospital.getHospitalType());
-			if(hospital.getHospitalZone()!=null)
-			modifiableHospital.setHospitalZone(hospital.getHospitalZone());
-			return hospitalRepository.save(modifiableHospital);
-
-		} else {
-			throw new NoSuchHospitalException("No Such Hospital Exist");
-		}
-	}
 
 	@Override
 	public List<Hospital> findAllHospitals() {
@@ -95,6 +76,16 @@ public class HospitalServiceImpl implements HospitalService {
 	public HospitalType addHospitalType(@Valid HospitalType hospitalType) {
 		logger.info("For adding HOSPITAL type");
 		return typeRepository.save(hospitalType);
+	}
+
+	@Override
+	public List<HospitalZone> getAllHospitalZones() {
+		return zoneRepository.findAll();
+	}
+
+	@Override
+	public List<HospitalType> getAllHospitalType() {
+		return typeRepository.findAll();
 	}
 
 	@Override

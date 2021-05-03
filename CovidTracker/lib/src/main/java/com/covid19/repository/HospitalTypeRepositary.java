@@ -13,4 +13,7 @@ public interface HospitalTypeRepositary extends JpaRepository<HospitalType, Inte
 	@Query("select type from HospitalType type where type.typeName=:typeName")
 
 	public HospitalType findHospitalTypeByName(@Param("typeName") String HospitalTypeName);
+
+	@Query("select type from HospitalType type where type.typeId=:typeId")
+	public HospitalType findHospitalTypeById(@Param("typeId")int typeId);
 }

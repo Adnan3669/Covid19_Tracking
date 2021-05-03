@@ -47,7 +47,7 @@ public class AdminServiceTestImplUsingMockito {
 		when(adminCredentials.adminCredentialsDetail()).thenReturn(admin);
 		when(hospitalRepository.save(hospital)).thenReturn(hospital);
 		when(adminRepository.save(admin)).thenReturn(admin);
-
+		
 		Hospital expectedHospital = adminService.addHospital(1,hospital);
 
 		assertEquals(hospital, expectedHospital);

@@ -12,10 +12,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.exceptions.NoSuchHospitalException;
+import com.covid19.exceptions.NoSuchTypeException;
+import com.covid19.exceptions.NoSuchZoneException;
 import com.covid19.model.Hospital;
+import com.covid19.repository.HospitalTypeRepositary;
 import com.covid19.service.AdminService;
 @SpringBootTest
-public class AdminServiceTestImpl {
+ class AdminServiceTestImpl {
 
 	@Autowired
 	AdminService adminService;
@@ -23,40 +26,42 @@ public class AdminServiceTestImpl {
 	Hospital hospital;
 	@Transactional
 	@Test
-	public void TestAddHospitalAndGetHospital() throws NoSuchAdminException, NoSuchHospitalException
+	 void TestAddHospitalAndGetHospital() throws NoSuchAdminException, NoSuchHospitalException, NoSuchTypeException, NoSuchZoneException
 	{
 		hospital.setHospitalGeneralBed(10);
 		hospital.setHospitalICUBed(10);
 		hospital.setHospitalName("Jairam Hospital");
-		Hospital expectedHospital=adminService.addHospital(1,hospital);
+		Hospital expectedHospital = adminService.addHospital(7,hospital, 2, 97);
 		Hospital actualHospital=adminService.getHospitalById(hospital.getHospitalId());
 		assertEquals(expectedHospital, actualHospital);
 	}
 	@Transactional
 	@Test
-	public void GetHospitalForNoSuchHospitalException() throws NoSuchHospitalException
+	 void GetHospitalForNoSuchHospitalException() throws NoSuchHospitalException
 	{
+		
+		
 		assertThrows(NoSuchHospitalException.class, ()->{
-			
-			adminService.getHospitalById(10000);
+			if(adminService.getHospitalById(10000)==null)	
+			adminService.getHospitalById(100000);
 		});
 		
 	}
 	@Transactional
 	@Test
-	public void TestRemoveHospitalById() throws NoSuchAdminException, NoSuchHospitalException
+	 void TestRemoveHospitalById() throws NoSuchAdminException, NoSuchHospitalException, NoSuchTypeException, NoSuchZoneException
 	{
 		hospital.setHospitalGeneralBed(10);
 		hospital.setHospitalICUBed(10);
 		hospital.setHospitalName("Jairam Hospital");
-		hospital=adminService.addHospital(1,hospital);
+		hospital=adminService.addHospital(7,hospital, 2, 97);
 		boolean flag= adminService.removeHospitalById(hospital.getHospitalId());
 		assertTrue(flag);
 	
 	}
 	@Transactional
 	@Test
-	public void TestRemoveHospitalByIdThrowsNoSuchHospitalException() throws NoSuchAdminException, NoSuchHospitalException
+	 void TestRemoveHospitalByIdThrowsNoSuchHospitalException() throws NoSuchAdminException, NoSuchHospitalException
 	{
 	assertThrows(NoSuchHospitalException.class, ()->{
 		adminService.removeHospitalById(10000);

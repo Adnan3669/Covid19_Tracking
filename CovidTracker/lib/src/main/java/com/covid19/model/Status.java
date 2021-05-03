@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,6 +29,7 @@ public class Status {
 	@Column(name = "status_id")
 	private int statusId;
 	
+	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "confirm_date")
 	private LocalDate confirmDate;

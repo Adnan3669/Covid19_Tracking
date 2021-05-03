@@ -64,7 +64,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<String> findTotalDataBasedOnZoneAndDate(@Pattern(regexp = "[A-Za-z0-9]+$") @NotNull String zoneName,@NotNull @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate date)
 	{
-		Integer death=0,active=0,recovered=0,confirm=0;
+		Integer death=0;
+		Integer active=0;
+		Integer recovered=0;
+		Integer confirm=0;
 		HospitalZone zone=hospitalZoneRepositary.findHospitalZoneByName(zoneName);
 		for (Hospital hospital : zone.getHospitals()) {
 			confirm+= statusRepository.findTotalCasesinParticularDate(date,hospital.getHospitalId());

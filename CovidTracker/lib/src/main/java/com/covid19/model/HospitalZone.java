@@ -3,15 +3,12 @@ package com.covid19.model;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.Valid;
@@ -26,6 +23,11 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class HospitalZone implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name = "zone_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,11 +37,6 @@ public class HospitalZone implements Serializable {
 	@Pattern(regexp = "[A-Za-z0-9]+$", message = "Invalid Characters entered for Hospital Zone")
 	@Column(name = "zone_name", length = 20, nullable = false)
 	private String zoneName;
-
-	@Valid
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinColumn(name = "district_id")
-	private District district;
 
 	@Valid
 	@OneToMany(mappedBy = "hospitalZone",fetch = FetchType.LAZY)
@@ -61,13 +58,6 @@ public class HospitalZone implements Serializable {
 		this.zoneName = zoneName;
 	}
 
-	public District getDistrict() {
-		return district;
-	}
-
-	public void setDistrict(District district) {
-		this.district = district;
-	}
 
 	public List<Hospital> getHospitals() {
 		return hospitals;

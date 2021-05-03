@@ -43,6 +43,8 @@ public class PatientServiceImpl implements PatientService {
 		if (hospital != null) {
 			patient.setHospital(hospital);
 			patientRepository.save(patient);
+			hospital.getPatients().add(patient);
+			hospitalRepository.save(hospital);
 			return patient;
 		} else {
 			throw new NoSuchHospitalException("No Such Hospital Exists");
@@ -55,24 +57,20 @@ public class PatientServiceImpl implements PatientService {
 
 		Patient modifypatient = patientRepository.findByPatientId(patient.getPatientId());
 		if (modifypatient != null) {
-			if (!modifypatient.getPatientFirstName().equals(patient.getPatientFirstName())) {
-				modifypatient.setPatientFirstName(patient.getPatientFirstName());
-			}
-			if (!modifypatient.getPatientLastName().equals(patient.getPatientLastName())) {
-				modifypatient.setPatientLastName(patient.getPatientLastName());
-			}
-			if (!(modifypatient.getPatientAge() == patient.getPatientAge())) {
-				modifypatient.setPatientAge(patient.getPatientAge());
-			}
-			if (!(modifypatient.getPatientMobileNo() == patient.getPatientMobileNo())) {
-				modifypatient.setPatientMobileNo(patient.getPatientMobileNo());
-			}
-			if (!modifypatient.getPatientGender().equals(patient.getPatientGender())) {
-				modifypatient.setPatientGender(patient.getPatientGender());
-			}
+
+			modifypatient.setPatientFirstName(patient.getPatientFirstName());
+
+			modifypatient.setPatientLastName(patient.getPatientLastName());
+
+			modifypatient.setPatientAge(patient.getPatientAge());
+
+			modifypatient.setPatientMobileNo(patient.getPatientMobileNo());
+
+			modifypatient.setPatientGender(patient.getPatientGender());
+
 			return patientRepository.save(modifypatient);
 		} else {
-			throw new NoSuchPatientException("No Such Patient Exist");
+			throw new NoSuchPatientException("No Such Patient Exist ");
 		}
 	}
 
@@ -113,7 +111,7 @@ public class PatientServiceImpl implements PatientService {
 			if (((status.getConfirmDate().isBefore(status.getIsolationDate())
 					|| status.getConfirmDate().isEqual(status.getIsolationDate())) && status.getConfirmDate() != null
 					&& status.getIsolationDate() != null)
-					&& !(status.getRecoveredDate() != null && status.getIsolationDate() != null)) {
+					&& !(status.getRecoveredDate() != null && status.getDeathDate() != null)) {
 
 				if (!modifiedStatus.getConfirmDate().equals(status.getConfirmDate())) {
 					modifiedStatus.setConfirmDate(status.getConfirmDate());
@@ -121,16 +119,15 @@ public class PatientServiceImpl implements PatientService {
 				if (!modifiedStatus.getIsolationDate().equals(status.getIsolationDate())) {
 					modifiedStatus.setIsolationDate(status.getIsolationDate());
 				}
-					modifiedStatus.setRecoveredDate(status.getRecoveredDate());
-					modifiedStatus.setDeathDate(status.getDeathDate());
-				
+				modifiedStatus.setRecoveredDate(status.getRecoveredDate());
+				modifiedStatus.setDeathDate(status.getDeathDate());
+
 				return statusRepository.save(modifiedStatus);
 			} else {
 				throw new DateIsNotAppropriate("Date property is not appropriate");
 			}
 
-		}
-		else {
+		} else {
 			throw new NoSuchStatusException("No Status with given id");
 		}
 	}

@@ -1,7 +1,6 @@
 package com.covid19.controller;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
 
 import org.slf4j.Logger;
@@ -35,7 +34,7 @@ public class PatientController {
 	Logger logger = LoggerFactory.getLogger(PatientController.class);
 
 	// http://localhost:9090/CovidTracker.com/patients/addpatient
-	@PostMapping(path = "/addpatient", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json")
+	@PostMapping(path = "/addpatient", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Patient addPatient(@RequestParam("hospitalId") @Positive int hospitalId, @RequestBody @Valid Patient patient) throws NoSuchHospitalException {
 		logger.info("For adding details of new PATIENT");
 		return patientService.addPatient(hospitalId, patient);
@@ -57,7 +56,7 @@ public class PatientController {
 
 	// http://localhost:9090/CovidTracker.com/patients/addpatientstatus
 	@PostMapping(path = "/addpatientstatus", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json")
-	public Status addPatientStatus(@RequestParam("patientId") @Positive int patientId, @RequestBody @Valid Status status) throws NoSuchPatientException {
+	public Status addPatientStatus(@RequestParam("patientId") @Positive int patientId, @RequestBody @Valid Status status) throws NoSuchPatientException, DateIsNotAppropriate {
 		logger.info("For adding STATUS details of PATIENT");
 		return patientService.addPatientStatus(patientId, status);
 	}
@@ -68,4 +67,5 @@ public class PatientController {
 		logger.info("For modifying details of PATIENT STATUS");
 		return patientService.modifyPatientStatus(status);
 	}
+
 }

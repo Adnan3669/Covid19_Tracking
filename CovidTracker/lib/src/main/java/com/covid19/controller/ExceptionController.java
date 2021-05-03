@@ -17,40 +17,37 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.exceptions.NoSuchHospitalException;
+import com.covid19.exceptions.NoSuchTypeException;
+import com.covid19.exceptions.NoSuchZoneException;
 
-@Validated
-@ControllerAdvice
 @RestController
+@ControllerAdvice
 class ExceptionController extends ResponseEntityExceptionHandler {
 	@ExceptionHandler
 	public ResponseEntity<String> exceptionHandler(NoSuchAdminException e) {
 		logger.error("For verifying if the ADMIN is present or not");
-		return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST); 
-	
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+
 	}
 
 	@ExceptionHandler
 	public ResponseEntity<String> exceptionHandler(NoSuchHospitalException e) {
 		logger.error("For verifying if the HOSPITAL is present or not");
-		return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST); 
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 
-	@ExceptionHandler(ConstraintViolationException.class)
-	private ResponseEntity<List<String>> handleConstraintViolation(ConstraintViolationException cve) {
-		Set<ConstraintViolation<?>> cvs = cve.getConstraintViolations();
-		List<String> violationList = new ArrayList<>();
-		for (ConstraintViolation<?> cv : cvs) {
-			StringBuilder buffer = new StringBuilder();
-			buffer.append("\nViolation: " + cv.getMessage() + "\n" + "Entity: " + cv.getRootBeanClass().getSimpleName());
-			// The violation occurred on a leaf bean
-			if (cv.getLeafBean() != null && cv.getRootBean() != cv.getLeafBean()) {
-				buffer.append("\nEmbeddable: " + cv.getLeafBean().getClass().getSimpleName());
-			}
-			buffer.append("\nAttribute: " + cv.getPropertyPath());
-			buffer.append("\nInvalid value: " + cv.getInvalidValue());
-			violationList.add(buffer.toString());
-		}
-		return new ResponseEntity<>(violationList,HttpStatus.BAD_REQUEST);
+	@ExceptionHandler
+	public ResponseEntity<String> exceptionHandler(NoSuchTypeException e) {
+		logger.error("For verifying if the Hospital Type is present or not");
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
+
+	@ExceptionHandler
+	public ResponseEntity<String> exceptionHandler(NoSuchZoneException e) {
+		logger.error("For verifying if the Hospital Zone is present or not");
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+
+	
 
 }

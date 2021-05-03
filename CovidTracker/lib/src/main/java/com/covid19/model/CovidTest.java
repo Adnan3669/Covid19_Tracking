@@ -38,7 +38,7 @@ public class CovidTest {
 	private Patient patient;
 	
 	@NotBlank
-	@Pattern(regexp = "^P(ositive)?$|^N(egative)?$",message = "Input can be Positive or Negative ")
+	@Pattern(regexp = "^Positive?$|^Negative?$",message = "Input can be Positive or Negative ")
 	@Column(name ="result_val" )
 	private String result;
 	

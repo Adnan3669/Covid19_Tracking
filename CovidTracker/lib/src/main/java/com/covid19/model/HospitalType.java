@@ -27,7 +27,7 @@ public class HospitalType {
 	@Column(name = "type_id")
 	private int typeId;
 	@NotBlank
-	@Pattern(regexp = "[A-Za-z]+$",message = "Invalid Characters entered for District")
+	@Pattern(regexp = "[A-Za-z]+$",message = "Invalid Characters entered for TypeName")
 	@Column(name="type_name",length = 20,nullable = false)
 	private String typeName;
 	

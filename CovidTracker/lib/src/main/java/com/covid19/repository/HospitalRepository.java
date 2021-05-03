@@ -17,7 +17,7 @@ public interface HospitalRepository extends JpaRepository<Hospital, Integer> {
 	@Query("Select s from Hospital s Where s.hospitalZone.zoneName=:zoneName")
 	public List<Hospital> findHospitalByZone(@Param("zoneName") String zone);
 
-	@Query("Select s from Hospital s where (s.hospitalGeneralBed + s.hospitalIcuBed )!=0 ")
+	@Query("Select s from Hospital s where s.hospitalGeneralBed!=0 or s.hospitalIcuBed!=0 ")
 	public List<Hospital> findHospitalByFreeBeds();
 
 	@Query("Select hospital from Hospital hospital where hospital.hospitalId=:hospitalId" )

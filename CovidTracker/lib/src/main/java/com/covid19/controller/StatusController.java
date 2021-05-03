@@ -3,6 +3,8 @@ package com.covid19.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -97,5 +99,6 @@ public class StatusController {
 
 		return new ResponseEntity<>(service.findTotalDataBasedOnZoneAndDate(zoneName,date),HttpStatus.ACCEPTED);
 	}
+	
 
 }

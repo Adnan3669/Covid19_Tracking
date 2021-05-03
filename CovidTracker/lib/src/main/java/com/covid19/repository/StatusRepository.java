@@ -2,11 +2,17 @@ package com.covid19.repository;
 
 import java.time.LocalDate;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.covid19.model.HospitalZone;
 import com.covid19.model.Status;
 
 @Repository
@@ -51,7 +57,13 @@ public interface StatusRepository extends JpaRepository<Status, Integer> {
 
 	@Query("Select count(s) from Status s where  s.deathDate>=:firstDay and s.deathDate<=:lastDay ")
 	public void findTotalDeathOfMonth(@Param("firstDay") LocalDate firstDay, @Param("lastDay") LocalDate lastDay);
-//
-//	@Query("Select count(s) from Status s where s.patient.hospital.hospitalId=:hospitalId and s.recoveredDate=:date")
-//	public void findTotalDeathAtZone(@Param("firstDay") LocalDate firstDay, @Param("lastDay") LocalDate lastDay);
+
+	@Query("Select count(s) from Status s where s.patient.hospital.hospitalZone.zoneId=:zoneId and s.deathDate is not null")
+	public int findTotalDeathByZone(@Param("zoneId") @NotNull int zoneId);
+	
+	@Query("Select count(s) from Status s where s.patient.patientAge=:age and s.deathDate is not null")
+	public int findTotalDeathByAge(@Param("age") int age);
+
+	@Query("Select count(s) from Status s where s.patient.patientGender=:gender and s.deathDate is not null")
+	public int findTotalDeathByGender( @Param("gender") String gender);
 }
