@@ -17,12 +17,25 @@ import javax.validation.constraints.NotNull;
 import org.springframework.context.annotation.Scope;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
-
+/*@Entity It is used to represents table in relational database
+ *@Scope It indicates the name of a scope to use for instances of annotated type
+ *@Component It is used to denote a class as component
+ *@Table It is used override the name of table
+ * */
 @Entity
 @Scope("prototype")
 @Component
 @Table(name = "Status")
 public class Status {
+	/* 
+	 * Here @Id annotation specifies primary key of entity
+	 * @GeneratedValue provides for the specification of generation strategies
+	 * @DateTimeFormat is used to declare a field should be formatted as a date or time
+	 * @Column is used to specify the mapped column for a persistent field
+	 * @NotNull means a method should not return null 
+	 * @Valid It is used to validate the user's input
+	 * @JoinColumn is used to specify a column for joining an entity association 
+	 * */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -50,6 +63,12 @@ public class Status {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "patient_id")
 	private Patient patient;
+	
+	/*
+	 * we have declared here getter and setter 
+	 * getter method will returns value
+	 * setter method will sets the value 
+	 * */
 
 	public int getStatusId() {
 		return statusId;

@@ -16,7 +16,10 @@ import com.covid19.model.Patient;
 import com.covid19.model.Status;
 import com.covid19.repository.HospitalZoneRepositary;
 import com.covid19.repository.StatusRepository;
-
+/*
+ * @Service It is used with classes that provide some business functionalities
+ * @Autowired Spring framework enables automatic dependency injection
+ * */
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired
@@ -26,41 +29,74 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private HospitalZoneRepositary hospitalZoneRepositary;
 
+	/*
+	 * here we override findTotalCases() method.
+	 * it will give the total cases and return type is integer
+	 * */
+
 	@Override
 	public int findTotalCases() {
 
 		return statusRepository.findTotalCases();
 	}
 
+	/*
+	 * here we override findTotalCasesIn24Hrs() method.
+	 * it will give the total cases in last 24 hours by passing two argument as current date and passDate
+	 * return type is integer
+	 * */
 	@Override
 	public int findTotalCasesIn24Hrs(LocalDate currentDate, LocalDate passedDate) {
 		return statusRepository.findTotalCasesIn24Hrs(currentDate, passedDate);
 	}
 
+
+	/*
+	 * here we override findTotalLabTest() method.
+	 * it will give the total Lab Test and return type is integer
+	 * */
 	@Override
 	public int findTotalLabTest() {
 		return statusRepository.findTotalLabTest();
 	}
 
+	
+	/*
+	 * here we override findTotalConfirmedCases() method.
+	 * it will give the total Confirmed Cases and return type is integer
+	 * */
 	@Override
 	public int findTotalConfirmedCases() {
 		return statusRepository.findTotalConfirmedCases();
 	}
 
+	/*
+	 * here we override findTotalRecoveredCases() method.
+	 * it will give the total Recovered Cases and return type is integer
+	 * */
 	@Override
 	public int findTotalRecoveredCases() {
 		return statusRepository.findTotalRecoverdCases();
 	}
-
+	
+	/*
+	 * here we override findTotalPatientInIsolation() method.
+	 * it will give the total Patient In Isolation and return type is integer
+	 * */
 	@Override
 	public int findTotalPatientInIsolation() {
 		return statusRepository.findTotalPatientInIsolation();
 	}
 
+	/*
+	 * here we override findTotalDeath() method.
+	 * it will give the total Death and return type is integer
+	 * */
 	@Override
 	public int findTotalDeath() {
 		return statusRepository.findTotalDeath();
 	}
+	
 	@Override
 	public List<String> findTotalDataBasedOnZoneAndDate(@Pattern(regexp = "[A-Za-z0-9]+$") @NotNull String zoneName,@NotNull @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate date)
 	{
