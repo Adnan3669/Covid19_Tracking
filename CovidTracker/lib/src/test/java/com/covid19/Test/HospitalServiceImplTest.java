@@ -52,11 +52,7 @@ class HospitalServiceImplTest {
 
 	@Test
 	void testfindHospitalByType() throws NoSuchAdminException, NoSuchTypeException, NoSuchZoneException, AdminException {
-		admin.setAdminFirstName("gaurav");
-		admin.setAdminLastName("Kailash");
-		admin.setAdminPassword("KKKK@1223");
-		admin.setAdminUserName("Jaijai");
-		admin.setAdminId(1);
+		
 		admin=adminService.addAdmin(admin);
 		hospitalType.setTypeName("Government");
 		hospitalType=hospitalService.addHospitalType(hospitalType);

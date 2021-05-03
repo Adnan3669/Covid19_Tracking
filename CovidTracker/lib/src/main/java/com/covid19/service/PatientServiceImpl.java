@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import com.covid19.exceptions.DateIsNotAppropriate;
 import com.covid19.exceptions.NoSuchHospitalException;
@@ -20,7 +21,7 @@ import com.covid19.repository.HospitalRepository;
 import com.covid19.repository.PatientRepository;
 import com.covid19.repository.PatientTestRepository;
 import com.covid19.repository.StatusRepository;
-
+@Validated
 @Service
 public class PatientServiceImpl implements PatientService {
 

@@ -48,7 +48,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public Admin addAdmin(@Valid Admin admin) throws AdminException {
 
-			return adminRepository.save(admin);
+		return adminRepository.save(admin);
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new NoSuchZoneException("No Such Zone Exist  first add Such Zone");
 		}
 		hospital.setAdmins(adminList);
-		hospital=hospitalRepository.save(hospital);
+		hospital = hospitalRepository.save(hospital);
 		admin.getHospitals().add(hospital);
 		adminRepository.save(admin);
 		return hospital;
