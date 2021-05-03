@@ -16,7 +16,7 @@ public interface PatientService {
 
 	public Patient modifyPatient(@Valid Patient patient) throws NoSuchPatientException;
 
-	public CovidTest addPatientTestDetails(int patientId, CovidTest covidTest) throws NoSuchPatientException;
+	public CovidTest addPatientTestDetails(@Positive int patientId, @Valid CovidTest covidTest) throws NoSuchPatientException;
 
 	public Status addPatientStatus(@Positive int patientId,@Valid Status status) throws NoSuchPatientException, DateIsNotAppropriate;
 

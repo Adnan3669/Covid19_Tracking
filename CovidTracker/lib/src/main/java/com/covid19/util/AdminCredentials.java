@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.model.Admin;
 import com.covid19.repository.AdminRepository;
-import com.covid19.service.AdminService;
 
 @Component
 public class AdminCredentials {
