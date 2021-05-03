@@ -34,6 +34,9 @@ public class PatientController {
 	Logger logger = LoggerFactory.getLogger(PatientController.class);
 
 	// http://localhost:9090/CovidTracker.com/patients/addpatient
+	
+	 /* This controller method will consume data in JSON type and will produce output in JSON type,
+	  * used to add patient using hospital id.*/
 	@PostMapping(path = "/addpatient", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Patient addPatient(@RequestParam("hospitalId") @Positive int hospitalId, @RequestBody @Valid Patient patient) throws NoSuchHospitalException {
 		logger.info("For adding details of new PATIENT");
@@ -41,6 +44,9 @@ public class PatientController {
 	}
 
 	// http://localhost:9090/CovidTracker.com/patients/modifypatient
+	
+	/* This controller method will consume data in JSON type and will produce output in JSON type,
+	  * used to modify patient .*/
 	@PutMapping(path = "/modifypatient", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json")
 	public Patient modifyPatient(@RequestBody @Valid Patient patient) throws NoSuchPatientException {
 		logger.info("For modifying details of PATIENT");
@@ -48,6 +54,9 @@ public class PatientController {
 	}
 
 	// http://localhost:9090/CovidTracker.com/patients/addpatienttestdetails
+	
+	/* This controller method will consume data in JSON type and will produce output in JSON type,
+	  * used to add patient Test details.*/
 	@PostMapping(path = "/addpatienttestdetails", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json")
 	public CovidTest addPatientTestDetails(@RequestParam("patientId") @Positive int patientId, @RequestBody @Valid CovidTest covidTest) throws NoSuchPatientException {
 		logger.info("For adding TEST details of PATIENT");
@@ -55,6 +64,9 @@ public class PatientController {
 	}
 
 	// http://localhost:9090/CovidTracker.com/patients/addpatientstatus
+	
+	/* This controller method will consume data in JSON type and will produce output in JSON type,
+	 * used to add patient status details.*/
 	@PostMapping(path = "/addpatientstatus", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json")
 	public Status addPatientStatus(@RequestParam("patientId") @Positive int patientId, @RequestBody @Valid Status status) throws NoSuchPatientException, DateIsNotAppropriate {
 		logger.info("For adding STATUS details of PATIENT");
@@ -62,6 +74,9 @@ public class PatientController {
 	}
 	
 	// http://localhost:9090/CovidTracker.com/patients/modifypatientstatus
+	
+	/* This controller method will consume data in JSON type and will produce output in JSON type,
+	  * used to modify patient status details.*/
 	@PutMapping(path = "/modifypatientstatus", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json")
 	public Status modifyPatientStatus(@RequestBody @Valid Status status) throws NoSuchStatusException, DateIsNotAppropriate {
 		logger.info("For modifying details of PATIENT STATUS");

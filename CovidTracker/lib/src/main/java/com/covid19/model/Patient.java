@@ -35,51 +35,55 @@ public class Patient implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)           // will generate values of primary key in auto type.
+	@Id                                                    //will make patient id as primary key.
 	@Column(name = "patient_id")
 	private int patientId;
 
-	@NotBlank
-	@Pattern(regexp = "[A-Za-z]*", message = "Patient First Name is not appropriate")
-	@Column(name = "patient_fname", length = 20)
-	private String patientFirstName;
 
-	@Pattern(regexp = "[A-Za-z']+$", message = "Patient Last Name is not appropriate")
-	@Column(name = "patient_lname", length = 20)
+	@NotBlank
+	@Pattern(regexp = "[A-Za-z]*", message = "Patient First Name is not appropriate")       // used to achieve regular expression validation.
+	@Column(name = "patient_fname", length = 20)                                            //setup length of String of "patient_fname" column.
+	private String patientFirstName;                                  
+
+	@Pattern(regexp = "[A-Za-z']+$", message = "Patient Last Name is not appropriate")     // used to achieve regular expression validation.
+	@Column(name = "patient_lname", length = 20)											//setup length of String of "patient_lname" column.
 	private String patientLastName;
 
-	@Max(value = 9999999999L, message = "Inappropriate mobile number entered!")
-	@Min(value = 1111111111, message = "Inappropriate mobile number entered!")
+	@Max(value = 9999999999L, message = "Inappropriate mobile number entered!")           // maximum value for column.
+	@Min(value = 1111111111, message = "Inappropriate mobile number entered!")            // minimum value for column.
 	@Column(name = "patient_mobileno", length = 10)
 	private long patientMobileNo;
 
-	@Positive
+	@Positive                                         //value should be positive.
 	@Column(name = "patient_age", length = 3)
 	private int patientAge;
 
-	@NotBlank
-	@Pattern(regexp = "^Male?$|^Female?$", message = "Input can be Male or Female ")
+	@NotBlank                                            // this field cannot be blank.
+	@Pattern(regexp = "^Male?$|^Female?$", message = "Input can be Male or Female ")     //will achieve regular expression validation for field.
 	@Column(name = "patient_gender")
 	private String patientGender;
 
-	@Valid
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@Valid                                                    // allows validate object.
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)         // Many to one association with hospital Table.
 	@JoinColumn(name = "hospital_id")
 	private Hospital hospital;
 
-	@Valid
-	@OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
+	@Valid                                                 // allows validate object.
+	@OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)         //one to many association with covidTest Table.
 	private List<CovidTest> covidTest;
 
-	@Valid
-	@OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
+	@Valid                                                // allows validate object,
+	@OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)          // one to many association with status Table.
 	private List<Status> status;
 
 	public Patient() {
 
 	}
-
+    
+	/*
+	 * Getters and Setters.
+	 */
 	public int getPatientId() {
 		return patientId;
 	}
