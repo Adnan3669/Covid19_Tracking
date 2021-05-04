@@ -5,12 +5,12 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
+import com.covid19.entities.Hospital;
+import com.covid19.entities.HospitalType;
+import com.covid19.entities.HospitalZone;
 import com.covid19.exceptions.NoSuchHospitalException;
 import com.covid19.exceptions.NoSuchTypeException;
 import com.covid19.exceptions.NoSuchZoneException;
-import com.covid19.model.Hospital;
-import com.covid19.model.HospitalType;
-import com.covid19.model.HospitalZone;
 
 public interface HospitalService {
 

@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.covid19.entities.Hospital;
+import com.covid19.entities.HospitalType;
+import com.covid19.entities.HospitalZone;
 import com.covid19.exceptions.NoSuchTypeException;
 import com.covid19.exceptions.NoSuchZoneException;
-import com.covid19.model.Hospital;
-import com.covid19.model.HospitalType;
-import com.covid19.model.HospitalZone;
 import com.covid19.service.HospitalService;
 
 @Validated

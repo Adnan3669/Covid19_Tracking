@@ -2,7 +2,6 @@ package com.covid19.Test;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -16,15 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import com.covid19.entities.Admin;
+import com.covid19.entities.Hospital;
+import com.covid19.entities.HospitalType;
+import com.covid19.entities.HospitalZone;
 import com.covid19.exceptions.AdminException;
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.exceptions.NoSuchHospitalException;
 import com.covid19.exceptions.NoSuchTypeException;
 import com.covid19.exceptions.NoSuchZoneException;
-import com.covid19.model.Admin;
-import com.covid19.model.Hospital;
-import com.covid19.model.HospitalType;
-import com.covid19.model.HospitalZone;
 import com.covid19.repository.AdminRepository;
 import com.covid19.repository.HospitalRepository;
 import com.covid19.repository.HospitalTypeRepositary;
@@ -63,7 +62,7 @@ class AdminServiceImplUsingMockitoTest {
 		admin.setAdminId(1);
 		admin.setAdminFirstName("gaurav");
 		admin.setAdminLastName("Kailash");
-		admin.setAdminPassword("KKKK@1223");
+		admin.setAdminPassword("KKKK1223");
 		admin.setAdminUserName("Jaijai");
 		List<Hospital> hpList = new ArrayList<>();
 		admin.setHospitals(hpList);
@@ -173,7 +172,7 @@ class AdminServiceImplUsingMockitoTest {
 		admin.setAdminId(1);
 		admin.setAdminFirstName("gaurav");
 		admin.setAdminLastName("Kailash");
-		admin.setAdminPassword("KKKK@1223");
+		admin.setAdminPassword("KKKk1223");
 		admin.setAdminUserName("Jaijai");
 		hospitalType.setTypeId(1);
 		hospitalType.setTypeName("Corporate");
@@ -198,7 +197,7 @@ class AdminServiceImplUsingMockitoTest {
 		admin.setAdminId(1);
 		admin.setAdminFirstName("gaurav");
 		admin.setAdminLastName("Kailash");
-		admin.setAdminPassword("KKKK@1223");
+		admin.setAdminPassword("KKKl1223");
 		admin.setAdminUserName("Jaijai");
 		hospitalType.setTypeId(1);
 		hospitalType.setTypeName("Corporate");
@@ -225,7 +224,7 @@ class AdminServiceImplUsingMockitoTest {
 		admin.setAdminId(1);
 		admin.setAdminFirstName("gaurav");
 		admin.setAdminLastName("Kailash");
-		admin.setAdminPassword("KKKK@1223");
+		admin.setAdminPassword("KKKk1223");
 		admin.setAdminUserName("Jaijai");
 		hospitalType.setTypeId(1);
 		hospitalType.setTypeName("Corporate");
@@ -275,7 +274,7 @@ class AdminServiceImplUsingMockitoTest {
 		Admin newAdmin = new Admin();
 		newAdmin.setAdminFirstName("suraj");
 		newAdmin.setAdminLastName("jain");
-		newAdmin.setAdminPassword("KKKKii@1223");
+		newAdmin.setAdminPassword("KKKi1223");
 		newAdmin.setAdminUserName("Lokesh222");
 		List<Hospital> hpList = new ArrayList<>();
 		newAdmin.setHospitals(hpList);

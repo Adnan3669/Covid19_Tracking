@@ -9,14 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import com.covid19.entities.CovidTest;
+import com.covid19.entities.Hospital;
+import com.covid19.entities.Patient;
+import com.covid19.entities.Status;
 import com.covid19.exceptions.DateIsNotAppropriate;
 import com.covid19.exceptions.NoSuchHospitalException;
 import com.covid19.exceptions.NoSuchPatientException;
 import com.covid19.exceptions.NoSuchStatusException;
-import com.covid19.model.CovidTest;
-import com.covid19.model.Hospital;
-import com.covid19.model.Patient;
-import com.covid19.model.Status;
 import com.covid19.repository.HospitalRepository;
 import com.covid19.repository.PatientRepository;
 import com.covid19.repository.PatientTestRepository;

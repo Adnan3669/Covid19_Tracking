@@ -5,13 +5,13 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
+import com.covid19.entities.Admin;
+import com.covid19.entities.Hospital;
 import com.covid19.exceptions.AdminException;
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.exceptions.NoSuchHospitalException;
 import com.covid19.exceptions.NoSuchTypeException;
 import com.covid19.exceptions.NoSuchZoneException;
-import com.covid19.model.Admin;
-import com.covid19.model.Hospital;
 
 public interface AdminService {
 	public boolean removeHospitalById(@Positive int hospitalId) throws NoSuchHospitalException, NoSuchAdminException;

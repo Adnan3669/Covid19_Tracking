@@ -12,11 +12,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import com.covid19.entities.Hospital;
+import com.covid19.entities.HospitalType;
+import com.covid19.entities.HospitalZone;
 import com.covid19.exceptions.NoSuchTypeException;
 import com.covid19.exceptions.NoSuchZoneException;
-import com.covid19.model.Hospital;
-import com.covid19.model.HospitalType;
-import com.covid19.model.HospitalZone;
 import com.covid19.repository.HospitalRepository;
 import com.covid19.repository.HospitalTypeRepositary;
 import com.covid19.repository.HospitalZoneRepositary;

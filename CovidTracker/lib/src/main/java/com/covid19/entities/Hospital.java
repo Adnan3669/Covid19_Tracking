@@ -1,4 +1,4 @@
-package com.covid19.model;
+package com.covid19.entities;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,9 +24,10 @@ import javax.validation.constraints.Size;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Scope("prototype")//Create Bean Everytime
+@Scope("prototype") // Create Bean Everytime
 @Component
 @Table(name = "Hospital")
 public class Hospital implements Serializable {
@@ -34,25 +35,25 @@ public class Hospital implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Id													//Specifies That hospitalId is primary key
-	@GeneratedValue(strategy = GenerationType.AUTO)		//Incrementing the hospitalId automatically
+	@Id // Specifies That hospitalId is primary key
+	@GeneratedValue(strategy = GenerationType.AUTO) // Incrementing the hospitalId automatically
 	@Column(name = "hospital_id")
 	private int hospitalId;
 
-	@NotBlank											//Specifies that the hospitalName Should not be blank
+	@NotBlank // Specifies that the hospitalName Should not be blank
 	@Pattern(regexp = "[a-zA-Z\\s]*$", message = "Hospital name should be Alphabhetic only")
 	@Size(min = 3, max = 50, message = "Hospital name is not in range")
 	@Column(name = "hospital_name", length = 50)
 	private String hospitalName;
 
-	@Valid
+	
 	/*
 	 * Giving Relationship Between Hospital and hospitalZone as many to one show
 	 * that many hospital can have one zone
 	 */
-
+	@Valid
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "zone_id")									//Specifying zoneId as Foreign key of Hospital
+	@JoinColumn(name = "zone_id") // Specifying zoneId as Foreign key of Hospital
 	private HospitalZone hospitalZone;
 
 	@Valid
@@ -61,7 +62,7 @@ public class Hospital implements Serializable {
 	 * that many hospital can have one Type
 	 */
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "type_id")								//Specifying typeId as Foreign key of Hospital 
+	@JoinColumn(name = "type_id") // Specifying typeId as Foreign key of Hospital
 	private HospitalType hospitalType;
 
 	@PositiveOrZero(message = "Entered  General Bed Count is not in Range")
@@ -77,7 +78,8 @@ public class Hospital implements Serializable {
 	private List<Admin> admins;
 
 	@Valid
-	//Giving OneToMany Relation Between Hospital and Patients so that One hospital have many Patients
+	// Giving OneToMany Relation Between Hospital and Patients so that One hospital
+	// have many Patients
 	@OneToMany(mappedBy = "hospital", fetch = FetchType.LAZY)
 	private List<Patient> patients;
 
@@ -97,18 +99,22 @@ public class Hospital implements Serializable {
 		this.hospitalName = hospitalName;
 	}
 
+	@JsonIgnore
 	public HospitalZone getHospitalZone() {
 		return hospitalZone;
 	}
 
+	@JsonIgnore
 	public void setHospitalZone(HospitalZone hospitalZone) {
 		this.hospitalZone = hospitalZone;
 	}
 
+	@JsonIgnore
 	public HospitalType getHospitalType() {
 		return hospitalType;
 	}
 
+	@JsonIgnore
 	public void setHospitalType(HospitalType hospitalType) {
 		this.hospitalType = hospitalType;
 	}
@@ -129,18 +135,22 @@ public class Hospital implements Serializable {
 		this.hospitalIcuBed = hospitalICUBed;
 	}
 
+	@JsonIgnore
 	public List<Admin> getAdmins() {
 		return admins;
 	}
 
+	@JsonIgnore
 	public void setAdmins(List<Admin> admins) {
 		this.admins = admins;
 	}
 
+	@JsonIgnore
 	public List<Patient> getPatients() {
 		return patients;
 	}
 
+	@JsonIgnore
 	public void setPatients(List<Patient> patients) {
 		this.patients = patients;
 	}

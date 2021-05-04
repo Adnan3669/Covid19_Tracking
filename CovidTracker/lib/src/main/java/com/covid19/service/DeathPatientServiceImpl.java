@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import com.covid19.model.HospitalZone;
+import com.covid19.entities.HospitalZone;
 import com.covid19.repository.HospitalZoneRepositary;
 import com.covid19.repository.StatusRepository;
 

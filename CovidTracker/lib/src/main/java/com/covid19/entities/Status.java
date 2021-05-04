@@ -1,4 +1,4 @@
-package com.covid19.model;
+package com.covid19.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;

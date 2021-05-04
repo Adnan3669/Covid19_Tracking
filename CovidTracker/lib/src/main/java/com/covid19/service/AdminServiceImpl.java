@@ -16,15 +16,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import com.covid19.entities.Admin;
+import com.covid19.entities.Hospital;
+import com.covid19.entities.HospitalType;
+import com.covid19.entities.HospitalZone;
 import com.covid19.exceptions.AdminException;
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.exceptions.NoSuchHospitalException;
 import com.covid19.exceptions.NoSuchTypeException;
 import com.covid19.exceptions.NoSuchZoneException;
-import com.covid19.model.Admin;
-import com.covid19.model.Hospital;
-import com.covid19.model.HospitalType;
-import com.covid19.model.HospitalZone;
 import com.covid19.repository.AdminRepository;
 import com.covid19.repository.HospitalRepository;
 import com.covid19.repository.HospitalTypeRepositary;
@@ -115,6 +115,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new NoSuchAdminException("No Such Admin Exists");
 		List<Admin> adminList = new ArrayList<>();
 		adminList.add(admin);
+		hospital.setAdmins(adminList);
 		HospitalType hospitalType = typeRepository.findHospitalTypeById(hospitalTypeId);
 		if (hospitalType != null) {
 			hospital.setHospitalType(hospitalType);
@@ -127,7 +128,7 @@ public class AdminServiceImpl implements AdminService {
 		} else {
 			throw new NoSuchZoneException("No Such Zone Exist  first add Such Zone");
 		}
-		hospital.setAdmins(adminList);
+		
 		hospital = hospitalRepository.save(hospital);
 		admin.getHospitals().add(hospital);
 		adminRepository.save(admin);
@@ -179,7 +180,7 @@ public class AdminServiceImpl implements AdminService {
 		}
 		return admin;
 	}
-
+	
 	@Override
 	public Hospital modifyHospital(@Valid Hospital hospital) throws NoSuchHospitalException {
 		logger.info("For modifying HOSPITAL");

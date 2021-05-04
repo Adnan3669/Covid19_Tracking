@@ -12,14 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import com.covid19.entities.Admin;
+import com.covid19.entities.Hospital;
+import com.covid19.entities.HospitalType;
+import com.covid19.entities.HospitalZone;
 import com.covid19.exceptions.AdminException;
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.exceptions.NoSuchTypeException;
 import com.covid19.exceptions.NoSuchZoneException;
-import com.covid19.model.Admin;
-import com.covid19.model.Hospital;
-import com.covid19.model.HospitalType;
-import com.covid19.model.HospitalZone;
 import com.covid19.repository.AdminRepository;
 import com.covid19.repository.HospitalRepository;
 import com.covid19.repository.HospitalTypeRepositary;

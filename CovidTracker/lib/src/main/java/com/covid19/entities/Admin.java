@@ -1,4 +1,4 @@
-package com.covid19.model;
+package com.covid19.entities;
 
 import java.io.Serializable;
 import java.util.List;
@@ -20,6 +20,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -27,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 @Entity
 @Scope("prototype")
 @Table(name = "Admin")
-@Component
+@Controller
 public class Admin implements Serializable {
 	/**
 	 * 
@@ -60,8 +61,9 @@ public class Admin implements Serializable {
 
 	/*
 	 * Admin Password which is String and related to column admin_pass
-	 */	@NotBlank
-	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",message = "Minimum eight characters, at least one letter and one number")
+	 */
+	@NotBlank
+	//@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",message = "Minimum eight characters, at least one letter and one number")
 	@Column(name = "admin_pass", nullable = false)
 	private String adminPassword;
 	/*

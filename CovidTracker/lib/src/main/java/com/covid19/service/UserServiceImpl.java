@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
-import com.covid19.model.Hospital;
-import com.covid19.model.HospitalZone;
-import com.covid19.model.Patient;
-import com.covid19.model.Status;
+import com.covid19.entities.Hospital;
+import com.covid19.entities.HospitalZone;
+import com.covid19.entities.Patient;
+import com.covid19.entities.Status;
 import com.covid19.repository.HospitalZoneRepositary;
 import com.covid19.repository.StatusRepository;
 

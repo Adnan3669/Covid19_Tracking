@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.covid19.model.Admin;
+import com.covid19.entities.Admin;
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, Integer> {
 
