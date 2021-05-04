@@ -7,10 +7,14 @@ import org.springframework.stereotype.Repository;
 
 import com.covid19.model.HospitalZone;
 
+/*
+ * Repository for Hospital Zone
+ */
 @Repository
 public interface HospitalZoneRepositary extends JpaRepository<HospitalZone, Integer> {
 	@Query("select zone from HospitalZone zone where zone.zoneName=:zoneName")
 	public HospitalZone findHospitalZoneByName(@Param("zoneName") String hospitalZoneName);
+
 	@Query("select zone from HospitalZone zone where zone.zoneId=:zoneId")
-	public HospitalZone findHospitalZoneById(@Param("zoneId")  int hospitalZoneId);
+	public HospitalZone findHospitalZoneById(@Param("zoneId") int hospitalZoneId);
 }

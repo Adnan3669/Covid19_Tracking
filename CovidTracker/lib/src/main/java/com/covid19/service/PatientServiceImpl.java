@@ -106,6 +106,7 @@ public class PatientServiceImpl implements PatientService {
 				status.setRecoveredDate(status.getRecoveredDate());
 				status.setDeathDate(status.getDeathDate());
 				status.setPatient(patient);
+				patient.getStatus().add(status);
 				return statusRepository.save(status);
 			} else {
 				throw new DateIsNotAppropriate("Date property is not appropriate");

@@ -6,6 +6,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
+/*
+ * Using interface which methods needs to be implemented.
+ */
+
 public interface DeathPatientService {
 	public int findMonthWiseDeath(@Min(1) @Max(12) int month);
 
