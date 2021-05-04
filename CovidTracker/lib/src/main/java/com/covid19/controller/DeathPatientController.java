@@ -37,7 +37,7 @@ public class DeathPatientController {
 	Logger logger = LoggerFactory.getLogger(DeathPatientController.class);
 
 	/*
-	 * Using Mapping
+	 * Using Mapping Annotations
 	 */
 
 	// http://localhost:9090/CovidTracker.com/deathstatistic/monthWiseDeath/1
