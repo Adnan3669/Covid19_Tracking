@@ -258,29 +258,4 @@ class AdminServiceImplUsingMockitoTest {
 
 	}
 	/* Test Case 9:-> for assignHospitalTo Admin for NoSuchHospitalException */
-
-	@Test
-	void assignHospitalToAdminTest()
-			throws AdminException, NoSuchAdminException, NoSuchTypeException, NoSuchZoneException {
-		admin = adminService.addAdmin(admin);/* Done Test ->Test Case No:1 */
-		hospitalType.setTypeName("Corporate");
-		hospitalZone.setZoneName("Gujarat");
-		hospital.setHospitalGeneralBed(10);
-		hospital.setHospitalICUBed(10);
-		hospital.setHospitalName("Jairam Hospital");
-
-		hospital = adminService.addHospital(admin.getAdminId(), hospital, hospitalZone.getZoneId(), // test case no.6
-				hospitalType.getTypeId());
-		Admin newAdmin = new Admin();
-		newAdmin.setAdminFirstName("suraj");
-		newAdmin.setAdminLastName("jain");
-		newAdmin.setAdminPassword("KKKi1223");
-		newAdmin.setAdminUserName("Lokesh222");
-		List<Hospital> hpList = new ArrayList<>();
-		newAdmin.setHospitals(hpList);
-		adminService.addAdmin(newAdmin);
-		adminService.assignHospitalToAdmin(hospital.getHospitalId(), newAdmin.getAdminId());
-		boolean value = newAdmin.getHospitals().contains(hospital);
-		assertTrue(value);
-	}
 }
