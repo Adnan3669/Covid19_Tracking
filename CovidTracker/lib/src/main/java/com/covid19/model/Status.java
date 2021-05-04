@@ -1,5 +1,6 @@
 package com.covid19.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
@@ -22,7 +23,12 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 @Component
 @Table(name = "Status")
-public class Status {
+public class Status  implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -94,7 +100,7 @@ public class Status {
 	public Patient getPatient() {
 		return patient;
 	}
-
+	
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}

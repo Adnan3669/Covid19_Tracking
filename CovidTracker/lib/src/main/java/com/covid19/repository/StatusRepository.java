@@ -56,7 +56,7 @@ public interface StatusRepository extends JpaRepository<Status, Integer> {
 	public Integer findTotalDeathinParticularDate(@Param("date") LocalDate date,@Param("hospitalId") int hospitalId);
 
 	@Query("Select count(s) from Status s where  s.deathDate>=:firstDay and s.deathDate<=:lastDay ")
-	public void findTotalDeathOfMonth(@Param("firstDay") LocalDate firstDay, @Param("lastDay") LocalDate lastDay);
+	public int findTotalDeathOfMonth(@Param("firstDay") LocalDate firstDay, @Param("lastDay") LocalDate lastDay);
 
 	@Query("Select count(s) from Status s where s.patient.hospital.hospitalZone.zoneId=:zoneId and s.deathDate is not null")
 	public int findTotalDeathByZone(@Param("zoneId") @NotNull int zoneId);

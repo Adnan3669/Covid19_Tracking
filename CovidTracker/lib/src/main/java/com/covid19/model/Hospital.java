@@ -24,8 +24,9 @@ import javax.validation.constraints.Size;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+
 @Entity
-@Scope("prototype")
+@Scope("prototype")//Create Bean Everytime
 @Component
 @Table(name = "Hospital")
 public class Hospital implements Serializable {
@@ -33,25 +34,34 @@ public class Hospital implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Id													//Specifies That hospitalId is primary key
+	@GeneratedValue(strategy = GenerationType.AUTO)		//Incrementing the hospitalId automatically
 	@Column(name = "hospital_id")
 	private int hospitalId;
 
-	@NotBlank
+	@NotBlank											//Specifies that the hospitalName Should not be blank
 	@Pattern(regexp = "[a-zA-Z\\s]*$", message = "Hospital name should be Alphabhetic only")
 	@Size(min = 3, max = 50, message = "Hospital name is not in range")
 	@Column(name = "hospital_name", length = 50)
 	private String hospitalName;
 
 	@Valid
+	/*
+	 * Giving Relationship Between Hospital and hospitalZone as many to one show
+	 * that many hospital can have one zone
+	 */
+
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "zone_id")
+	@JoinColumn(name = "zone_id")									//Specifying zoneId as Foreign key of Hospital
 	private HospitalZone hospitalZone;
 
 	@Valid
+	/*
+	 * Giving Relationship Between Hospital and hospitalType as many to one show
+	 * that many hospital can have one Type
+	 */
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "type_id")
+	@JoinColumn(name = "type_id")								//Specifying typeId as Foreign key of Hospital 
 	private HospitalType hospitalType;
 
 	@PositiveOrZero(message = "Entered  General Bed Count is not in Range")
@@ -62,10 +72,12 @@ public class Hospital implements Serializable {
 	@Column(name = "icu_bed")
 	private int hospitalIcuBed;
 
+//	Giving ManyToMany Relation Between Admin and Hospital so that Many hospital have many admins
 	@ManyToMany(mappedBy = "hospitals", fetch = FetchType.LAZY)
 	private List<Admin> admins;
 
 	@Valid
+	//Giving OneToMany Relation Between Hospital and Patients so that One hospital have many Patients
 	@OneToMany(mappedBy = "hospital", fetch = FetchType.LAZY)
 	private List<Patient> patients;
 

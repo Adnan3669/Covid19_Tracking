@@ -18,11 +18,15 @@ import javax.validation.constraints.Pattern;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "HospitalZone")
 @Component
 @Scope("prototype")
 public class HospitalZone implements Serializable {
+
+
 	/**
 	 * 
 	 */
@@ -35,7 +39,7 @@ public class HospitalZone implements Serializable {
 	
 	@NotBlank
 	@Pattern(regexp = "[A-Za-z0-9]+$", message = "Invalid Characters entered for Hospital Zone")
-	@Column(name = "zone_name", length = 20, nullable = false)
+	@Column(name = "zone_name", length = 20, nullable = false,unique = true)
 	private String zoneName;
 
 	@Valid
@@ -58,11 +62,11 @@ public class HospitalZone implements Serializable {
 		this.zoneName = zoneName;
 	}
 
-
+	@JsonIgnore
 	public List<Hospital> getHospitals() {
 		return hospitals;
 	}
-
+	@JsonIgnore
 	public void setHospitals(List<Hospital> hospitals) {
 		this.hospitals = hospitals;
 	}

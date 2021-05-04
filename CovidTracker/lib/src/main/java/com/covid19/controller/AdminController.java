@@ -32,7 +32,6 @@ import com.covid19.service.AdminService;
 
 @RestController
 @RequestMapping("admin")
-@Validated
 public class AdminController {
 	@Autowired
 	AdminService adminService;
@@ -40,6 +39,7 @@ public class AdminController {
 	Logger logger = LoggerFactory.getLogger(AdminController.class);
 
 	/*
+	 * Request for adding Admin
 	 * http://localhost:9090/CovidTracker.com/admin/addAdmin
 	 */
 	@PostMapping(path = "/addAdmin", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,6 +49,7 @@ public class AdminController {
 	}
 
 	/*
+	 * Request for adding Hospital
 	 * http://localhost:9090/CovidTracker.com/admin/addHospital
 	 */
 	@PostMapping(path = "/addHospital", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -60,6 +61,7 @@ public class AdminController {
 	}
 
 	/*
+	 * Request for removing Hospital
 	 * http://localhost:9090/CovidTracker.com/admin/removeHospital
 	 */
 	@DeleteMapping(path = "/removeHospital")
@@ -74,6 +76,7 @@ public class AdminController {
 	}
 
 	/*
+	 * Request for assignHospitalToAdmin
 	 * http://localhost:9090/CovidTracker.com/admin/assignHospitalToAdmin
 	 */
 	@PutMapping(path = "/assignHospitalToAdmin", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -88,6 +91,7 @@ public class AdminController {
 	}
 
 	/*
+	 * Request for modifyHospital
 	 * http://localhost:9090/CovidTracker.com/admin/modifyHospital
 	 */
 	@PutMapping(path = "/modifyHospital", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json")
@@ -102,30 +106,33 @@ public class AdminController {
 			response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		return response;
 	}
+
 	/*
-	 * http://localhost:9090/CovidTracker.com/admin/allAdmins
+	 * Request for allAdmins http://localhost:9090/CovidTracker.com/admin/allAdmins
 	 */
-	@GetMapping(path = "/allAdmins",produces = MediaType.APPLICATION_JSON_VALUE )
-	public ResponseEntity<List<Admin>> getAllAdmins()
-	{
-		return new ResponseEntity<>(adminService.getAllAdmins(),HttpStatus.ACCEPTED);
-	}
-	/*
-	 * http://localhost:9090/CovidTracker.com/admin/getAdmin
-	 */
-	@GetMapping(path = "/getAdmin",produces = MediaType.APPLICATION_JSON_VALUE )
-	public ResponseEntity<Admin> getAdminById(@RequestParam("adminId") @Positive int adminId) throws NoSuchAdminException
-	{
-		return new ResponseEntity<>(adminService.getAdminById(adminId),HttpStatus.ACCEPTED);
-	}
-	/*
-	 * http://localhost:9090/CovidTracker.com/admin/getHospital
-	 */
-	@GetMapping(path = "/getHospital",produces = MediaType.APPLICATION_JSON_VALUE )
-	public ResponseEntity<Hospital> getHospitalById(@RequestParam("hospitalId") @Positive int hospitalId) throws NoSuchHospitalException
-	{
-		return new ResponseEntity<>(adminService.getHospitalById(hospitalId),HttpStatus.ACCEPTED);
+	@GetMapping(path = "/allAdmins", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Admin>> getAllAdmins() {
+		return new ResponseEntity<>(adminService.getAllAdmins(), HttpStatus.ACCEPTED);
 	}
 
+	/*
+	 * Request for getAdminById
+	 * http://localhost:9090/CovidTracker.com/admin/getAdmin
+	 */
+	@GetMapping(path = "/getAdmin", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Admin> getAdminById(@RequestParam("adminId") @Positive int adminId)
+			throws NoSuchAdminException {
+		return new ResponseEntity<>(adminService.getAdminById(adminId), HttpStatus.ACCEPTED);
+	}
+
+	/*
+	 * Request for getHospital
+	 * http://localhost:9090/CovidTracker.com/admin/getHospital
+	 */
+	@GetMapping(path = "/getHospital", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Hospital> getHospitalById(@RequestParam("hospitalId") @Positive int hospitalId)
+			throws NoSuchHospitalException {
+		return new ResponseEntity<>(adminService.getHospitalById(hospitalId), HttpStatus.ACCEPTED);
+	}
 
 }

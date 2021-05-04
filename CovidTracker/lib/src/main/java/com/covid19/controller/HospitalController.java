@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.covid19.exceptions.NoSuchTypeException;
@@ -48,17 +49,17 @@ public class HospitalController {
 	}
 
 	// http://localhost:9090/CovidTracker.com/hospital/byType/Goverment
-	@GetMapping(path = "/byType/{typeName}")
+	@GetMapping(path = "/byType/{typeName}",produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Hospital> getHospitalByType(@PathVariable("typeName") String typeName) throws NoSuchTypeException {
 		logger.info("For getting details of HOSPITALS by its type");
 		return hospitalService.findHospitalByType(typeName);
 	}
 
 	// http://localhost:9090/CovidTracker.com/hospital/byType/Dahisar
-	@GetMapping(path = "/byZone/{zoneName}")
-	public List<Hospital> getHospitalByZone(@PathVariable("zoneName") String zoneName) throws NoSuchZoneException {
+	@GetMapping(path = "/byZone/{zoneName}",produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Hospital>> getHospitalByZone(@PathVariable("zoneName") String zoneName) throws NoSuchZoneException {
 		logger.info("For getting details of HOSPITALS by zone");
-		return hospitalService.findHospitalByZone(zoneName);
+		return new ResponseEntity<>( hospitalService.findHospitalByZone(zoneName),HttpStatus.ACCEPTED);
 	}
 
 
@@ -79,7 +80,7 @@ public class HospitalController {
 	// http://localhost:9090/CovidTracker.com/hospital/addHospitalZone
 	@PostMapping(path = "/addHospitalZone")
 	public HospitalZone addHospitalZone(@RequestBody @Valid HospitalZone zone) throws NoSuchZoneException {
-		logger.info("for getting details of HOSPITALS by its zone");
+		logger.info("for getting details ofHOSPITALS by its zone");
 		return  hospitalService.addHospitalZone(zone);
 	}
 	// http://localhost:9090/CovidTracker.com/hospital/addHospitaltype

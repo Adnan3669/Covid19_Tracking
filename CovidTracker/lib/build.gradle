@@ -17,19 +17,41 @@ repositories {
 }
 
 dependencies {
-testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
-compile group: 'org.junit.platform', name: 'junit-platform-commons', version: '1.7.0'
-testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
-testImplementation group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
- implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.3.2.RELEASE'
- implementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.3.2.RELEASE'
- implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.3.2.RELEASE'
- implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.19'
- implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
- implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
- implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.3.2.RELEASE'
- implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
- implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.3.4.RELEASE'
 
+	// junit-jupiter-api has junit annotations (e.g. @Test) to write tests
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+	compile group: 'org.junit.platform', name: 'junit-platform-commons', version: '1.7.0'
+	
+	// junit-jupiter-engine has test engine implementation which is required at runtime to execute the tests
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+	
+	// Mockito is used to create and configure mock objects (e.g. @MockBean)
+	testImplementation group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+	
+	// It is used for building the web application, including RESTful applications using Spring MVC. It uses Tomcat Server (by default)
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.3.2.RELEASE'
+	
+	// The spring-boot-starter-test is the primary dependency for the test. It contains mainly two annotation (@SpringBootTest, @Test)
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.3.2.RELEASE'
+	
+	// It allows us to access and persist data between Java object/class and relational database
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.3.2.RELEASE'
+	
+	// It is used to Connect with the database
+	implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.19'
+	
+	// The Jakarta XML Binding provides an API and tools that automate the mapping between XML documents and Java objects
+	implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
+	
+	implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
+	
+	// Spring Boot DevTools pick up the changes and restart the application
+	implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.3.2.RELEASE'
+	
+	// It can automatically generate Swagger documentation based on your Spring controller and model classes
+	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
+	
+	// It is used to validate the input
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.3.4.RELEASE'
 
 }

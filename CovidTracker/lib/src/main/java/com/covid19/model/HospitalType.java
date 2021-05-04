@@ -1,5 +1,6 @@
 package com.covid19.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -17,18 +18,26 @@ import javax.validation.constraints.Pattern;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Scope("prototype")
 @Component
 @Table(name = "HospitalType")
-public class HospitalType {
+public class HospitalType implements Serializable {
+	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "type_id")
 	private int typeId;
 	@NotBlank
 	@Pattern(regexp = "[A-Za-z]+$",message = "Invalid Characters entered for TypeName")
-	@Column(name="type_name",length = 20,nullable = false)
+	@Column(name="type_name",length = 20,nullable = false,unique = true)
 	private String typeName;
 	
 	@Valid
@@ -50,14 +59,13 @@ public class HospitalType {
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
 	}
-
+	@JsonIgnore
 	public List<Hospital> getHospitals() {
 		return hospitals;
 	}
-
+	@JsonIgnore
 	public void setHospitals(List<Hospital> hospitals) {
 		this.hospitals = hospitals;
 	}
-	
 	
 }

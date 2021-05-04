@@ -13,7 +13,7 @@ public class CovidTrackerApp {
 	@Bean("list")
 	public List<String>  getListOfString()
 	{
-		return new ArrayList<String>();
+		return new ArrayList<>();
 	}
 	
 	public static void main(String[] args) {

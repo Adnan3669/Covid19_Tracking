@@ -29,7 +29,6 @@ import com.covid19.repository.AdminRepository;
 import com.covid19.repository.HospitalRepository;
 import com.covid19.repository.HospitalTypeRepositary;
 import com.covid19.repository.HospitalZoneRepositary;
-import com.covid19.util.AdminCredentials;
 
 @Service
 @Scope("singleton")
@@ -41,23 +40,42 @@ public class AdminServiceImpl implements AdminService {
 	private AdminRepository adminRepository;
 	@Autowired
 	private HospitalRepository hospitalRepository;
+
 	@Autowired
-	AdminCredentials adminCredentials;
+	HospitalZoneRepositary zoneRepository;
+	@Autowired
+	HospitalTypeRepositary typeRepository;
 	Logger logger = LoggerFactory.getLogger(AdminServiceImpl.class);
 
+	/* This is for addingAdmin takes Admin object as Parameter */
 	@Override
 	public Admin addAdmin(@Valid Admin admin) throws AdminException {
-
-		return adminRepository.save(admin);
+		logger.info("Admin Adding");
+		Admin findAdmin = adminRepository.findByAdminId(admin.getAdminId());
+		if (findAdmin == null) {
+			return adminRepository.save(admin);
+		}
+		throw new AdminException("Admin Already Exists");
 	}
 
+	/*
+	 * This is for getAllAdmin
+	 * 
+	 * @return List<Admin>
+	 */
 	@Override
 	public List<Admin> getAllAdmins() {
+		logger.info("GettingAll Admins");
 		return adminRepository.findAll();
 	}
-
+	/*
+	 * This is for assignHospitalToAdmin takes hospitalId and adminId
+	 * 
+	 * @return boolean
+	 */
 	@Override
 	public boolean assignHospitalToAdmin(@Positive int hospitalId, @Positive int adminId) {
+		logger.info("Assigning Admin to Hospital");
 		Admin admin = adminRepository.findByAdminId(adminId);
 		Hospital hospital = hospitalRepository.findByHospitalId(hospitalId);
 		if (hospital != null && admin != null) {
@@ -70,20 +88,24 @@ public class AdminServiceImpl implements AdminService {
 			return false;
 		}
 	}
-
+	/*
+	 * This is for getHospitalById takes hospitalId 
+	 * 
+	 * @return Hospital
+	 */
 	@Override
 	public Hospital getHospitalById(@Positive int hospitalId) throws NoSuchHospitalException {
+		logger.info("Finding Hospital By Hospital Id");
 		Hospital hospital = hospitalRepository.findByHospitalId(hospitalId);
 		if (hospital == null)
 			throw new NoSuchHospitalException("No Such Hospital Exist");
 		return hospital;
 	}
-
-	@Autowired
-	HospitalZoneRepositary zoneRepository;
-	@Autowired
-	HospitalTypeRepositary typeRepository;
-
+	/*
+	 * This is for addHsopital takes hospitalId 
+	 * 
+	 * @return Hospital
+	 */
 	@Override
 	public Hospital addHospital(@Positive int adminId, @Valid Hospital hospital, @Positive int hospitalZoneId,
 			@Positive int hospitalTypeId) throws NoSuchAdminException, NoSuchTypeException, NoSuchZoneException {
@@ -111,7 +133,11 @@ public class AdminServiceImpl implements AdminService {
 		adminRepository.save(admin);
 		return hospital;
 	}
-
+	/*
+	 * This is for removeHsopital takes hospitalId 
+	 * 
+	 * @return boolean
+	 */
 	@Override
 	public boolean removeHospitalById(@Positive int hospitalId) throws NoSuchHospitalException, NoSuchAdminException {
 		logger.info("For deleting HOSPITAL using id");
@@ -123,12 +149,14 @@ public class AdminServiceImpl implements AdminService {
 			}
 			HospitalType type = hospital.getHospitalType();
 			if (type != null) {
-				type.getHospitals().remove(hospital);
+				if (type.getHospitals() != null)
+					type.getHospitals().remove(hospital);
 				typeRepository.save(type);
 			}
 			HospitalZone zone = hospital.getHospitalZone();
 			if (zone != null) {
-				zone.getHospitals().remove(hospital);
+				if (zone.getHospitals() != null)
+					zone.getHospitals().remove(hospital);
 				zoneRepository.save(zone);
 			}
 			hospitalRepository.delete(hospital);
@@ -137,7 +165,11 @@ public class AdminServiceImpl implements AdminService {
 		throw new NoSuchHospitalException("No Such Hospital Exists");
 
 	}
-
+	/*
+	 * This is for getAdminById takes adminId 
+	 * 
+	 * @return Admin
+	 */
 	@Override
 	public Admin getAdminById(@Positive int adminId) throws NoSuchAdminException {
 		logger.info("Finding Admin By Admin Id");

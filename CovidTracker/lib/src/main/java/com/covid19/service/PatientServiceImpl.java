@@ -31,33 +31,35 @@ public class PatientServiceImpl implements PatientService {
 	private HospitalRepository hospitalRepository;
 	@Autowired
 	private PatientTestRepository patientTestRepository;
-
 	@Autowired
 	private StatusRepository statusRepository;
 
 	Logger logger = LoggerFactory.getLogger(PatientServiceImpl.class);
 
+	
 	@Override
+	/*  Adds Patient by Accepting hospitalId and Patient details.  */
 	public Patient addPatient(@Positive int hospitalId, @Valid Patient patient) throws NoSuchHospitalException {
 		logger.info("For adding PATIENT");
-		Hospital hospital = hospitalRepository.findByHospitalId(hospitalId);
-		if (hospital != null) {
-			patient.setHospital(hospital);
-			patientRepository.save(patient);
-			hospital.getPatients().add(patient);
-			hospitalRepository.save(hospital);
+		Hospital hospital = hospitalRepository.findByHospitalId(hospitalId);            /* find hospital by calling this method. */
+		if (hospital != null) {										/* check hospital is null or not, if not null then patient will be add. */
+			patient.setHospital(hospital);							
+			patientRepository.save(patient);                        // inserting record in patient table.
+			hospital.getPatients().add(patient);                    
+			hospitalRepository.save(hospital);                      //add inserted patient in hospital using hospital foreign key.
 			return patient;
 		} else {
-			throw new NoSuchHospitalException("No Such Hospital Exists");
+			throw new NoSuchHospitalException("No Such Hospital Exists");   //if hospital is not present with given id then this exception will be thrown.
 		}
 	}
 
 	@Override
+	/* modifies patient by accepting hospital id and patient details. */
 	public Patient modifyPatient(@Valid Patient patient) throws NoSuchPatientException {
 		logger.info("For modifying PATIENT");
 
-		Patient modifypatient = patientRepository.findByPatientId(patient.getPatientId());
-		if (modifypatient != null) {
+		Patient modifypatient = patientRepository.findByPatientId(patient.getPatientId());   //will check patient in database 
+		if (modifypatient != null) {                                                         //if patient is not null then will modify.
 
 			modifypatient.setPatientFirstName(patient.getPatientFirstName());
 
@@ -71,32 +73,41 @@ public class PatientServiceImpl implements PatientService {
 
 			return patientRepository.save(modifypatient);
 		} else {
-			throw new NoSuchPatientException("No Such Patient Exist ");
+			throw new NoSuchPatientException("No Such Patient Exist ");                      //if patient is null then will throw this exception.
 		}
 	}
 
 	@Override
+	/* adds patient Test details by accepting patient id and covidTest details. */
 	public CovidTest addPatientTestDetails(@Positive int patientId, @Valid CovidTest covidTest)
 			throws NoSuchPatientException {
 		logger.info("For adding PATIENT test details");
-		Patient patient = patientRepository.findByPatientId(patientId);
-		if (patient != null) {
+		Patient patient = patientRepository.findByPatientId(patientId);              //find patient by patient Id.
+		if (patient != null) {                                              // if patient is not null then will add test details.
 			covidTest.setPatient(patient);
 			patientTestRepository.save(covidTest);
 			return covidTest;
 		} else {
-			throw new NoSuchPatientException("No Such Patient Exist");
+			throw new NoSuchPatientException("No Such Patient Exist");          //if patient is null then exception will be thrown.
 		}
 	}
 
 	@Override
+	/* add patient Status by accepting patient id and patient status details. */
 	public Status addPatientStatus(@Positive int patientId, @Valid Status status)
 			throws NoSuchPatientException, DateIsNotAppropriate {
 		logger.info("For adding PATIENT status");
 
-		Patient patient = patientRepository.findByPatientId(patientId);
-		if (patient != null) {
-			if (((status.getConfirmDate().isBefore(status.getIsolationDate())
+		Patient patient = patientRepository.findByPatientId(patientId);              // find patient by id.
+		if (patient != null) {                                          //check if patient is null.
+			/*
+			 * checks all the condition for status of patient .
+			 * 1)confirm date should be before or equals to isolation date.
+			 * 2)confirm date and isolation date can not be null.
+			 * 3)one patient can not have recoverd date and death date at same time.
+			 * if conditions not followed throws Exception. 
+			 */
+			if (((status.getConfirmDate().isBefore(status.getIsolationDate())                                         
 					|| status.getConfirmDate().isEqual(status.getIsolationDate())) && status.getConfirmDate() != null
 					&& status.getIsolationDate() != null)
 					&& !(status.getRecoveredDate() != null && status.getDeathDate() != null)) {
@@ -108,15 +119,22 @@ public class PatientServiceImpl implements PatientService {
 				status.setPatient(patient);
 				return statusRepository.save(status);
 			} else {
-				throw new DateIsNotAppropriate("Date property is not appropriate");
+				throw new DateIsNotAppropriate("Date property is not appropriate");              //throws exception if date is not appropriate.
 			}
 
 		} else {
-			throw new NoSuchPatientException("No Such Patient Exist");
+			throw new NoSuchPatientException("No Such Patient Exist");                         // throws exception if patient does not exist.
 		}
 	}
 
 	@Override
+	/*
+	 * checks all the condition for status of patient .
+	 * 1)confirm date should be before or equals to isolation date.
+	 * 2)confirm date and isolation date can not be null.
+	 * 3)one patient can not have recoverd date and death date at same time.
+	 * if conditions not followed then throws exception.
+	 */
 	public Status modifyPatientStatus(@Valid Status status) throws NoSuchStatusException, DateIsNotAppropriate {
 		logger.info("For modifying PATIENT status");
 
@@ -138,11 +156,11 @@ public class PatientServiceImpl implements PatientService {
 
 				return statusRepository.save(modifiedStatus);
 			} else {
-				throw new DateIsNotAppropriate("Date property is not appropriate");
+				throw new DateIsNotAppropriate("Date property is not appropriate");               //Throws date not appropriate exception.
 			}
 
 		} else {
-			throw new NoSuchStatusException("No Status with given id");
+			throw new NoSuchStatusException("No Status with given id");                     
 		}
 	}
 }
