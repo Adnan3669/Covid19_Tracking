@@ -1,4 +1,4 @@
-package com.covid19.model;
+package com.covid19.entity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -21,6 +21,7 @@ import javax.validation.constraints.Size;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
@@ -121,7 +122,7 @@ public class Admin implements Serializable {
 	public void setAdminUserName(String adminUserName) {
 		this.adminUserName = adminUserName;
 	}
-	@JsonIgnore
+	@JsonGetter
 	public List<Hospital> getHospitals() {
 		return hospitals;
 	}

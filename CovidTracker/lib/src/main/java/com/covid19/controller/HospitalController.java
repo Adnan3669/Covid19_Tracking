@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,29 +20,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.covid19.entity.Hospital;
+import com.covid19.entity.HospitalType;
+import com.covid19.entity.HospitalZone;
 import com.covid19.exceptions.NoSuchTypeException;
 import com.covid19.exceptions.NoSuchZoneException;
-import com.covid19.model.Hospital;
-import com.covid19.model.HospitalType;
-import com.covid19.model.HospitalZone;
 import com.covid19.service.HospitalService;
 
 @Validated
 @RestController
+@CrossOrigin
 @RequestMapping(path = "hospital")
 public class HospitalController {
 	@Autowired
 	private HospitalService hospitalService;
 	
 	Logger logger = LoggerFactory.getLogger(HospitalController.class);
+	
 	// http://localhost:9090/CovidTracker.com/hospital
+//	This is For getting Details of all the Hospital
 	@GetMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Hospital>> getAllHospitals() {
 		logger.info("For getting details of ALL HOSPITALS");
 		ResponseEntity<List<Hospital>> response = null;
 		List<Hospital> result = hospitalService.findAllHospitals();
 		if (result != null)
-			response = new ResponseEntity<>(result, HttpStatus.FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 		
 		else
 			response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -49,6 +53,7 @@ public class HospitalController {
 	}
 
 	// http://localhost:9090/CovidTracker.com/hospital/byType/Goverment
+	//This method will Return the FindHospitalByType with th help of type name
 	@GetMapping(path = "/byType/{typeName}",produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Hospital> getHospitalByType(@PathVariable("typeName") String typeName) throws NoSuchTypeException {
 		logger.info("For getting details of HOSPITALS by its type");
@@ -71,7 +76,7 @@ public class HospitalController {
 		ResponseEntity<List<Hospital>> response = null;
 		List<Hospital> result = hospitalService.findHospitalByFreeBeds();
 		if (result != null)
-			response = new ResponseEntity<>(result, HttpStatus.FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 		else
 			response = new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		return response;
@@ -80,7 +85,7 @@ public class HospitalController {
 	// http://localhost:9090/CovidTracker.com/hospital/addHospitalZone
 	@PostMapping(path = "/addHospitalZone")
 	public HospitalZone addHospitalZone(@RequestBody @Valid HospitalZone zone) throws NoSuchZoneException {
-		logger.info("for getting details ofHOSPITALS by its zone");
+		logger.info("for getting details of HOSPITALS by its zone");
 		return  hospitalService.addHospitalZone(zone);
 	}
 	// http://localhost:9090/CovidTracker.com/hospital/addHospitaltype
@@ -98,7 +103,7 @@ public class HospitalController {
 	// http://localhost:9090/CovidTracker.com/hospital/allHospitalType
 	@GetMapping(path = "/allHospitalType")
 	public List<HospitalType> getAllHospitalType() {
-		logger.info("for getting details of HOSPITALS by its zone");
+		logger.info("for getting details of HOSPITALS by its type");
 		return  hospitalService.getAllHospitalType();
 	}
 

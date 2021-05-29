@@ -12,8 +12,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.covid19.model.HospitalZone;
-import com.covid19.model.Status;
+import com.covid19.entity.HospitalZone;
+import com.covid19.entity.Status;
 
 @Repository
 public interface StatusRepository extends JpaRepository<Status, Integer> {

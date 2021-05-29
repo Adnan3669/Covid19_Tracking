@@ -3,6 +3,8 @@ package com.covid19.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -16,15 +18,16 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import com.covid19.entity.Admin;
+import com.covid19.entity.Hospital;
+import com.covid19.entity.HospitalType;
+import com.covid19.entity.HospitalZone;
+import com.covid19.entity.Login;
 import com.covid19.exceptions.AdminException;
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.exceptions.NoSuchHospitalException;
 import com.covid19.exceptions.NoSuchTypeException;
 import com.covid19.exceptions.NoSuchZoneException;
-import com.covid19.model.Admin;
-import com.covid19.model.Hospital;
-import com.covid19.model.HospitalType;
-import com.covid19.model.HospitalZone;
 import com.covid19.repository.AdminRepository;
 import com.covid19.repository.HospitalRepository;
 import com.covid19.repository.HospitalTypeRepositary;
@@ -195,4 +198,21 @@ public class AdminServiceImpl implements AdminService {
 			throw new NoSuchHospitalException("No Such Hospital Exist");
 		}
 	}
+
+	@Override
+	public Admin getAdminCredentials(String username, String password) throws NoSuchAdminException {
+		Admin admin=adminRepository.findAdminCredentials(username, password);
+		if (admin == null) {
+			throw new NoSuchAdminException("No Such Admin exists");
+		}
+		
+		return admin;
+	}
+
+	
+
+	
+
+
+
 }

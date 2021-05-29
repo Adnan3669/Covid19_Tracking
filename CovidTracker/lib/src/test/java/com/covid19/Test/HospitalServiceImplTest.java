@@ -14,15 +14,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.covid19.entity.Admin;
+import com.covid19.entity.Hospital;
+import com.covid19.entity.HospitalType;
+import com.covid19.entity.HospitalZone;
 import com.covid19.exceptions.AdminException;
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.exceptions.NoSuchHospitalException;
 import com.covid19.exceptions.NoSuchTypeException;
 import com.covid19.exceptions.NoSuchZoneException;
-import com.covid19.model.Admin;
-import com.covid19.model.Hospital;
-import com.covid19.model.HospitalType;
-import com.covid19.model.HospitalZone;
 import com.covid19.repository.HospitalTypeRepositary;
 import com.covid19.repository.HospitalZoneRepositary;
 import com.covid19.service.AdminService;
@@ -77,7 +77,7 @@ class HospitalServiceImplTest {
 	
 	//Testing findHospitalByType For NoSuchTypeException
 	@Test
-	void findHospitalByZoneForNoSuchTypeException()throws NoSuchTypeException{
+	void findHospitalByTypeForNoSuchTypeException()throws NoSuchTypeException{
 		assertThrows(NoSuchTypeException.class, ()->{
 			boolean value = hospitalService.findHospitalByType("Goverment").contains(hospital);  // For NoSuchTypeException
 			assertTrue(value);
@@ -92,7 +92,7 @@ class HospitalServiceImplTest {
 		assertTrue(value);
 	}
 	
-	//Testing findHospitalByType For NoSuchAdminException
+	//Testing findHospitalByZone For NoSuchAdminException
 	@Test
 	void findHospitalByZoneForNoSuchAdminException()throws NoSuchAdminException{
 		assertThrows(NoSuchAdminException.class, ()->{
@@ -102,11 +102,11 @@ class HospitalServiceImplTest {
 		});
 	}
 	
-	//Testing findHospitalByType For NoSuchZoneException
+	//Testing findHospitalByZone For NoSuchZoneException
 	@Test
 	void findHospitalByZoneForNoSuchZoneException()throws NoSuchZoneException{
-		assertThrows(NoSuchTypeException.class, ()->{
-			boolean value = hospitalService.findHospitalByZone("Gujarat").contains(hospital);
+		assertThrows(NoSuchZoneException.class, ()->{
+			boolean value = hospitalService.findHospitalByZone("Gujrat").contains(hospital);
 			assertTrue(value);
 		});
 	}

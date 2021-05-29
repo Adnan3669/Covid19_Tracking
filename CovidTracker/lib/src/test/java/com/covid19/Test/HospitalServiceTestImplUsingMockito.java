@@ -12,14 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import com.covid19.entity.Admin;
+import com.covid19.entity.Hospital;
+import com.covid19.entity.HospitalType;
+import com.covid19.entity.HospitalZone;
 import com.covid19.exceptions.AdminException;
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.exceptions.NoSuchTypeException;
 import com.covid19.exceptions.NoSuchZoneException;
-import com.covid19.model.Admin;
-import com.covid19.model.Hospital;
-import com.covid19.model.HospitalType;
-import com.covid19.model.HospitalZone;
 import com.covid19.repository.AdminRepository;
 import com.covid19.repository.HospitalRepository;
 import com.covid19.repository.HospitalTypeRepositary;
@@ -54,12 +54,7 @@ public class HospitalServiceTestImplUsingMockito {
 	// Testing FindHospitalByType
 	@Test
 	void testfindHospitalByType() throws NoSuchAdminException, NoSuchTypeException, AdminException {
-		admin.setAdminFirstName("Gaurav");
-		admin.setAdminLastName("Singh");
-		admin.setAdminUserName("gaurav");
-		admin.setAdminPassword("GGG@123");
-		admin.setAdminId(2);
-		adminService.addAdmin(admin);
+		
 		hospital.setHospitalName("Namita Hospital");
 		hospital.setHospitalType(hospitalType);
 		hospitalType.setTypeName("private");

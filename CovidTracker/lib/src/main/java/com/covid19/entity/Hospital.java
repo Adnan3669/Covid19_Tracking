@@ -1,4 +1,4 @@
-package com.covid19.model;
+package com.covid19.entity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,9 +24,12 @@ import javax.validation.constraints.Size;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
-@Scope("prototype")//Create Bean Everytime
+@Scope("prototype")//Create Bean instance Every time as we run the application
 @Component
 @Table(name = "Hospital")
 public class Hospital implements Serializable {
@@ -50,7 +53,7 @@ public class Hospital implements Serializable {
 	 * Giving Relationship Between Hospital and hospitalZone as many to one show
 	 * that many hospital can have one zone
 	 */
-
+	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "zone_id")									//Specifying zoneId as Foreign key of Hospital
 	private HospitalZone hospitalZone;
@@ -60,6 +63,7 @@ public class Hospital implements Serializable {
 	 * Giving Relationship Between Hospital and hospitalType as many to one show
 	 * that many hospital can have one Type
 	 */
+	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "type_id")								//Specifying typeId as Foreign key of Hospital 
 	private HospitalType hospitalType;
@@ -96,19 +100,19 @@ public class Hospital implements Serializable {
 	public void setHospitalName(String hospitalName) {
 		this.hospitalName = hospitalName;
 	}
-
+	@JsonGetter
 	public HospitalZone getHospitalZone() {
 		return hospitalZone;
 	}
-
+	@JsonIgnore
 	public void setHospitalZone(HospitalZone hospitalZone) {
 		this.hospitalZone = hospitalZone;
 	}
-
+	@JsonGetter
 	public HospitalType getHospitalType() {
 		return hospitalType;
 	}
-
+	@JsonIgnore
 	public void setHospitalType(HospitalType hospitalType) {
 		this.hospitalType = hospitalType;
 	}
@@ -128,11 +132,11 @@ public class Hospital implements Serializable {
 	public void setHospitalICUBed(int hospitalICUBed) {
 		this.hospitalIcuBed = hospitalICUBed;
 	}
-
+	
 	public List<Admin> getAdmins() {
 		return admins;
 	}
-
+	@JsonIgnore
 	public void setAdmins(List<Admin> admins) {
 		this.admins = admins;
 	}

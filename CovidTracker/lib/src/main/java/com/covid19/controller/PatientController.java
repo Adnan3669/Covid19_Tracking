@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.covid19.entity.CovidTest;
+import com.covid19.entity.Patient;
+import com.covid19.entity.Status;
 import com.covid19.exceptions.DateIsNotAppropriate;
 import com.covid19.exceptions.NoSuchHospitalException;
 import com.covid19.exceptions.NoSuchPatientException;
 import com.covid19.exceptions.NoSuchStatusException;
-import com.covid19.model.CovidTest;
-import com.covid19.model.Patient;
-import com.covid19.model.Status;
 import com.covid19.service.PatientService;
 @Validated
 @RestController

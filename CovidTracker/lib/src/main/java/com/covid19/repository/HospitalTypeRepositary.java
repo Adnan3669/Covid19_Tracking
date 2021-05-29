@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.covid19.model.HospitalType;
+import com.covid19.entity.HospitalType;
 
 @Repository
 public interface HospitalTypeRepositary extends JpaRepository<HospitalType, Integer> {

@@ -1,4 +1,4 @@
-package com.covid19.model;
+package com.covid19.entity;
 
 import java.io.Serializable;
 import java.util.List;

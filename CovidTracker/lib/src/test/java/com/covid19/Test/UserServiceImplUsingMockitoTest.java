@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.covid19.model.Hospital;
-import com.covid19.model.HospitalZone;
+import com.covid19.entity.Hospital;
+import com.covid19.entity.HospitalZone;
 import com.covid19.repository.HospitalZoneRepositary;
 import com.covid19.repository.StatusRepository;
 import com.covid19.service.UserService;

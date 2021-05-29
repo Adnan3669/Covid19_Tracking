@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,15 +22,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.covid19.entity.Admin;
+import com.covid19.entity.Hospital;
+import com.covid19.entity.Login;
 import com.covid19.exceptions.AdminException;
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.exceptions.NoSuchHospitalException;
 import com.covid19.exceptions.NoSuchTypeException;
 import com.covid19.exceptions.NoSuchZoneException;
-import com.covid19.model.Admin;
-import com.covid19.model.Hospital;
 import com.covid19.service.AdminService;
 
+import net.bytebuddy.implementation.attribute.AnnotationAppender.Target.OnType;
+
+
+@CrossOrigin
 @RestController
 @RequestMapping("admin")
 public class AdminController {
@@ -53,7 +59,7 @@ public class AdminController {
 	 * http://localhost:9090/CovidTracker.com/admin/addHospital
 	 */
 	@PostMapping(path = "/addHospital", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Hospital addHospital(@RequestParam("adminId") @Positive int adminId, @RequestBody @Valid Hospital hospital,
+	public Hospital addHospital( @RequestBody @Valid Hospital hospital,@RequestParam("adminId") @Positive int adminId,
 			@RequestParam("zoneId") @Positive int hospitalZoneId, @Positive @RequestParam("typeId") int hospitalTypeId)
 			throws NoSuchAdminException, NoSuchTypeException, NoSuchZoneException {
 		logger.info("For creation of a new HOSPITAL");
@@ -62,14 +68,14 @@ public class AdminController {
 
 	/*
 	 * Request for removing Hospital
-	 * http://localhost:9090/CovidTracker.com/admin/removeHospital
+	 * 	
 	 */
 	@DeleteMapping(path = "/removeHospital")
-	public ResponseEntity<String> deleteHospital(@RequestParam(name = "id") @Positive int hospitalId)
+	public ResponseEntity<String> deleteHospital(@RequestParam("hospitalId") @Positive int hospitalId)
 			throws NoSuchAdminException, NoSuchHospitalException {
 		logger.info("For deleting an existing HOSPITAL");
 		if (adminService.removeHospitalById(hospitalId))
-			return new ResponseEntity<>("Deletion Request Accepted Successfully", HttpStatus.ACCEPTED);
+			return new ResponseEntity<>("Deletion Request Accepted Successfully", HttpStatus.OK);
 		else {
 			return new ResponseEntity<>("Deletion Request was Unsucessful", HttpStatus.NO_CONTENT);
 		}
@@ -134,5 +140,13 @@ public class AdminController {
 			throws NoSuchHospitalException {
 		return new ResponseEntity<>(adminService.getHospitalById(hospitalId), HttpStatus.ACCEPTED);
 	}
+	
+	@PostMapping(path = "/getAdminCredentials", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Admin> getAdminCredentials(@RequestBody Login login)
+			throws NoSuchAdminException {
+		return new ResponseEntity<>(adminService.getAdminCredentials(login.getUsername(),login.getPassword()), HttpStatus.OK);
+	}
+	
+	
 
 }
