@@ -112,11 +112,11 @@ public class PatientServiceImplTest {
 	}
 
 	@Test
-	void testAddPatientTestDetails() throws NoSuchHospitalException, NoSuchPatientException, NoSuchAdminException {
+	void testAddPatientTestDetails() throws NoSuchHospitalException, NoSuchPatientException, NoSuchAdminException, DateIsNotAppropriate, NoSuchStatusException {
 		covidTest.setTestDate(LocalDate.of(2021, 04, 28));
 		covidTest.setResult("Positive");
-		CovidTest expectedTest = patientService.addPatientTestDetails(patient.getPatientId(), covidTest);
-		CovidTest actualTest = patientTestRepository.getOne(expectedTest.getTestId());
+		Status expectedTest = patientService.addPatientTestDetails(patient.getPatientId(), covidTest);
+		Status actualTest = statusRepository.findStatusByPatientId(patient.getPatientId());
 		assertSame(expectedTest, actualTest);
 	}
 

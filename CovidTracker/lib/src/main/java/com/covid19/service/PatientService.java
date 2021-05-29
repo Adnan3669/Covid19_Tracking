@@ -1,5 +1,7 @@
 package com.covid19.service;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
@@ -16,9 +18,11 @@ public interface PatientService {
 
 	public Patient modifyPatient(@Valid Patient patient) throws NoSuchPatientException;
 
-	public CovidTest addPatientTestDetails(@Positive int patientId,@Valid CovidTest covidTest) throws NoSuchPatientException;
+	public Status addPatientTestDetails(@Positive int patientId,@Valid CovidTest covidTest) throws NoSuchPatientException, DateIsNotAppropriate, NoSuchStatusException;
 
 	public Status addPatientStatus(@Positive int patientId,@Valid Status status) throws NoSuchPatientException, DateIsNotAppropriate;
 
 	public Status modifyPatientStatus(@Valid Status status) throws NoSuchStatusException, DateIsNotAppropriate;
+
+	List<Patient> findAllPatients();
 }

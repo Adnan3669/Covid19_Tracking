@@ -54,7 +54,8 @@ public class AdminServiceImpl implements AdminService {
 		Admin findAdmin = adminRepository.findByAdminId(admin.getAdminId());
 		if (findAdmin == null) {
 			return adminRepository.save(admin);
-		}
+		} 
+		logger.warn("Entered in Admin Exception in AddAdmin");
 		throw new AdminException("Admin Already Exists");
 	}
 
@@ -85,6 +86,7 @@ public class AdminServiceImpl implements AdminService {
 			hospitalRepository.save(hospital);
 			return true;
 		} else {
+			logger.warn("logger info ");
 			return false;
 		}
 	}
@@ -196,4 +198,14 @@ public class AdminServiceImpl implements AdminService {
 			throw new NoSuchHospitalException("No Such Hospital Exist");
 		}
 	}
+	@Override
+	public Admin getAdminCredentials(String username, String password) throws NoSuchAdminException {
+		Admin admin=adminRepository.findAdminCredentials(username, password);
+		if (admin == null) {
+			throw new NoSuchAdminException("No Such Admin exists");
+		}
+		
+		return admin;
+	}
+
 }

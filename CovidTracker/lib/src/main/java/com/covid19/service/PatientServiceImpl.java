@@ -1,5 +1,10 @@
 package com.covid19.service;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.LocalDate;
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
@@ -79,14 +84,32 @@ public class PatientServiceImpl implements PatientService {
 
 	@Override
 	/* adds patient Test details by accepting patient id and covidTest details. */
-	public CovidTest addPatientTestDetails(@Positive int patientId, @Valid CovidTest covidTest)
-			throws NoSuchPatientException {
+	public Status addPatientTestDetails(@Positive int patientId, @Valid CovidTest covidTest)
+			throws NoSuchPatientException, DateIsNotAppropriate, NoSuchStatusException {
 		logger.info("For adding PATIENT test details");
 		Patient patient = patientRepository.findByPatientId(patientId);              //find patient by patient Id.
 		if (patient != null) {                                              // if patient is not null then will add test details.
 			covidTest.setPatient(patient);
 			patientTestRepository.save(covidTest);
-			return covidTest;
+			if(covidTest.getResult().equals("Positive") )
+			{
+			Status status =new Status();
+			status.setConfirmDate(LocalDate.now());
+			status.setIsolationDate(LocalDate.now());
+		return	addPatientStatus(patientId, status);
+			}
+			else {
+				Status status=statusRepository.findStatusByPatientId(patientId);
+				if(status!=null)
+				{
+					status.setRecoveredDate(LocalDate.now());
+					return modifyPatientStatus(status);
+				}
+				else {
+					return new Status();
+				}
+			}
+			
 		} else {
 			throw new NoSuchPatientException("No Such Patient Exist");          //if patient is null then exception will be thrown.
 		}
@@ -104,7 +127,7 @@ public class PatientServiceImpl implements PatientService {
 			 * checks all the condition for status of patient .
 			 * 1)confirm date should be before or equals to isolation date.
 			 * 2)confirm date and isolation date can not be null.
-			 * 3)one patient can not have recoverd date and death date at same time.
+			 * 3)one patient can not have recovered date and death date at same time.
 			 * if conditions not followed throws Exception. 
 			 */
 			if (((status.getConfirmDate().isBefore(status.getIsolationDate())                                         
@@ -140,6 +163,8 @@ public class PatientServiceImpl implements PatientService {
 
 		Status modifiedStatus = statusRepository.findStatusById(status.getStatusId());
 		if (modifiedStatus != null) {
+			if(status.getDeathDate()==null)
+			{
 			if (((status.getConfirmDate().isBefore(status.getIsolationDate())
 					|| status.getConfirmDate().isEqual(status.getIsolationDate())) && status.getConfirmDate() != null
 					&& status.getIsolationDate() != null)
@@ -156,11 +181,23 @@ public class PatientServiceImpl implements PatientService {
 
 				return statusRepository.save(modifiedStatus);
 			} else {
-				throw new DateIsNotAppropriate("Date property is not appropriate");               //Throws date not appropriate exception.
+				throw new DateIsNotAppropriate("Date property is not appropriate1");               //Throws date not appropriate exception.
+			}
+			}
+			else {
+				throw new DateIsNotAppropriate("Date property is not appropriate2");               //Throws date not appropriate exception.
+
 			}
 
 		} else {
 			throw new NoSuchStatusException("No Status with given id");                     
 		}
 	}
+	@Override
+	public List<Patient> findAllPatients() {
+		logger.info("For finding all Patients details");
+		return patientRepository.findAll();
+	}
+	
+	
 }

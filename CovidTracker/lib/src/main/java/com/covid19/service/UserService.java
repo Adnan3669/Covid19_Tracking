@@ -1,7 +1,9 @@
 package com.covid19.service;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Map;
+
+import com.covid19.entities.Record;
 
 
 public interface UserService {
@@ -14,6 +16,10 @@ public interface UserService {
 	public int findTotalDeath();
 	public int findTotalCasesIn24Hrs(LocalDate currentDate , LocalDate PassedDate);
 
-	List<String> findTotalDataBasedOnZoneAndDate(String zoneName, LocalDate date);
+	Record findTotalDataBasedOnZoneAndDate(int zoneId, LocalDate date);
+
+	Map<Integer,Record> findTotalDataBasedOnMonth(int startMonth, int endMonth);
+
+	Map<String, Record> findTotalDataBasedOnZone();
 	
 	 }

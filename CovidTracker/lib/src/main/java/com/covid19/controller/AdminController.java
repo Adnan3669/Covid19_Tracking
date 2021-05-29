@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.covid19.entities.Admin;
 import com.covid19.entities.Hospital;
+import com.covid19.entities.Login;
 import com.covid19.exceptions.AdminException;
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.exceptions.NoSuchHospitalException;
@@ -30,6 +32,7 @@ import com.covid19.exceptions.NoSuchZoneException;
 import com.covid19.service.AdminService;
 
 @RestController
+@CrossOrigin
 @RequestMapping("admin")
 public class AdminController {
 	@Autowired
@@ -41,6 +44,7 @@ public class AdminController {
 	 * Request for adding Admin
 	 * http://localhost:9090/CovidTracker.com/admin/addAdmin
 	 */
+	
 	@PostMapping(path = "/addAdmin", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Admin addAdmin(@Valid @RequestBody Admin admin) throws AdminException {
 		logger.info("For  creation of new Admin");
@@ -132,6 +136,11 @@ public class AdminController {
 	public ResponseEntity<Hospital> getHospitalById(@RequestParam("hospitalId") @Positive int hospitalId)
 			throws NoSuchHospitalException {
 		return new ResponseEntity<>(adminService.getHospitalById(hospitalId), HttpStatus.ACCEPTED);
+	}
+	@PostMapping(path = "/getAdminCredentials", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Admin> getAdminCredentials(@RequestBody Login login)
+			throws NoSuchAdminException {
+		return new ResponseEntity<>(adminService.getAdminCredentials(login.getUsername(),login.getPassword()), HttpStatus.OK);
 	}
 
 }

@@ -31,4 +31,6 @@ public interface AdminService {
 
 	public Hospital modifyHospital(@Valid Hospital hospital) throws NoSuchHospitalException;
 
+	Admin getAdminCredentials(String username, String password) throws NoSuchAdminException;
+
 }

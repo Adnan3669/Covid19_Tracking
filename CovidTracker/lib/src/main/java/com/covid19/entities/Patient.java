@@ -24,6 +24,7 @@ import org.checkerframework.checker.index.qual.Positive;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -135,16 +136,16 @@ public class Patient implements Serializable {
 	public void setPatientGender(String patientGender) {
 		this.patientGender = patientGender;
 	}
-
+	@JsonIgnore
 	public Hospital getHospital() {
 		return hospital;
 	}
-
+	@JsonIgnore
 	public void setHospital(Hospital hospital) {
 		this.hospital = hospital;
 	}
 
-	@JsonIgnore
+	@JsonGetter
 	public List<CovidTest> getTest() {
 		return covidTest;
 	}
@@ -154,7 +155,7 @@ public class Patient implements Serializable {
 		this.covidTest = covidTest;
 	}
 
-	@JsonIgnore
+	@JsonGetter
 	public List<Status> getStatus() {
 		return status;
 	}

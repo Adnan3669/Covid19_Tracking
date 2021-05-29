@@ -19,6 +19,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Scope("prototype")
 @Component
@@ -63,11 +65,11 @@ public class CovidTest implements Serializable{
 	public void setTestDate(LocalDate testDate) {
 		this.testDate = testDate;
 	}
-	
+	@JsonIgnore
 	public Patient getPatient() {
 		return patient;
 	}
-	
+	@JsonIgnore
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}

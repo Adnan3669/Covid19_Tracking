@@ -66,4 +66,19 @@ public interface StatusRepository extends JpaRepository<Status, Integer> {
 
 	@Query("Select count(s) from Status s where s.patient.patientGender=:gender and s.deathDate is not null")
 	public int findTotalDeathByGender( @Param("gender") String gender);
+	
+	@Query("Select count(s) from Status s where  s.confirmDate>=:firstDay and s.confirmDate<=:lastDay ")
+	public Integer findTotalCasesinMonth(@Param("firstDay") LocalDate firstDay, @Param("lastDay") LocalDate lastDay);
+
+	@Query("Select count(s) from Status s where  s.deathDate>=:firstDay and s.deathDate<=:lastDay ")
+	public Integer findTotalDeathinMonth(@Param("firstDay") LocalDate firstDay, @Param("lastDay") LocalDate lastDay);
+
+	@Query("Select count(s) from Status s where  s.recoveredDate>=:firstDay and s.recoveredDate<=:lastDay ")
+	public Integer findTotalRecoveredinMonth(@Param("firstDay") LocalDate firstDay, @Param("lastDay") LocalDate lastDay);
+	
+	@Query("Select count(s) from Status s where  s.isolationDate>=:firstDay and s.isolationDate<=:lastDay ")
+	public Integer findTotalActiveinMonth(@Param("firstDay") LocalDate firstDay, @Param("lastDay") LocalDate lastDay);
+	@Query("select status from Status status where status.patient.patientId=:patientId")
+	public Status findStatusByPatientId(@Param("patientId")@Positive int patientId);
+
 }

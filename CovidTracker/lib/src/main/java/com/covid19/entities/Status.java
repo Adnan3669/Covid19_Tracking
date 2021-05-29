@@ -19,6 +19,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Scope("prototype")
 @Component
@@ -52,6 +54,7 @@ public class Status  implements Serializable {
 	@Column(name = "death_date")
 	private LocalDate deathDate;
 
+	@JsonIgnore
 	@Valid
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "patient_id")
@@ -97,10 +100,11 @@ public class Status  implements Serializable {
 		this.deathDate = deathDate;
 	}
 
+	@JsonIgnore
 	public Patient getPatient() {
 		return patient;
 	}
-	
+	@JsonIgnore
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}

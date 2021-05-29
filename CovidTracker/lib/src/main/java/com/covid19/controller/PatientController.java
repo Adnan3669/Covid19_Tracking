@@ -1,13 +1,19 @@
 package com.covid19.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +31,7 @@ import com.covid19.exceptions.NoSuchStatusException;
 import com.covid19.service.PatientService;
 @Validated
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/patients")
 public class PatientController {
 
@@ -32,7 +39,19 @@ public class PatientController {
 	private PatientService patientService;
 
 	Logger logger = LoggerFactory.getLogger(PatientController.class);
-
+	//http://localhost:9090/CovidTracker.com/patients/allpatients
+		@GetMapping(path = "/allpatients", produces = MediaType.APPLICATION_JSON_VALUE)
+		public ResponseEntity<List<Patient>> getAllPatients() {
+			logger.info("For getting details of ALL Patients.");
+			ResponseEntity<List<Patient>> response = null;
+			List<Patient> result = patientService.findAllPatients();
+			if (result != null)
+				response = new ResponseEntity<>(result, HttpStatus.OK);
+			
+			else
+				response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return response;
+		} 
 	// http://localhost:9090/CovidTracker.com/patients/addpatient
 	@PostMapping(path = "/addpatient", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Patient addPatient(@RequestParam("hospitalId") @Positive int hospitalId, @RequestBody @Valid Patient patient) throws NoSuchHospitalException {
@@ -49,7 +68,7 @@ public class PatientController {
 
 	// http://localhost:9090/CovidTracker.com/patients/addpatienttestdetails
 	@PostMapping(path = "/addpatienttestdetails", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json")
-	public CovidTest addPatientTestDetails(@RequestParam("patientId") @Positive int patientId, @RequestBody @Valid CovidTest covidTest) throws NoSuchPatientException {
+	public Status addPatientTestDetails(@RequestParam("patientId") @Positive int patientId, @RequestBody @Valid CovidTest covidTest) throws NoSuchPatientException, DateIsNotAppropriate, NoSuchStatusException {
 		logger.info("For adding TEST details of PATIENT");
 		return patientService.addPatientTestDetails(patientId, covidTest);
 	}

@@ -3,8 +3,6 @@ package com.covid19.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.transaction.Transactional;
 

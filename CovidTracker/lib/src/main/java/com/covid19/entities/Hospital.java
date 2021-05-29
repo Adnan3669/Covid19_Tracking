@@ -24,6 +24,7 @@ import javax.validation.constraints.Size;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -51,6 +52,7 @@ public class Hospital implements Serializable {
 	 * Giving Relationship Between Hospital and hospitalZone as many to one show
 	 * that many hospital can have one zone
 	 */
+	@JsonIgnore
 	@Valid
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "zone_id") // Specifying zoneId as Foreign key of Hospital
@@ -61,6 +63,7 @@ public class Hospital implements Serializable {
 	 * Giving Relationship Between Hospital and hospitalType as many to one show
 	 * that many hospital can have one Type
 	 */
+	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "type_id") // Specifying typeId as Foreign key of Hospital
 	private HospitalType hospitalType;
@@ -82,7 +85,7 @@ public class Hospital implements Serializable {
 	// have many Patients
 	@OneToMany(mappedBy = "hospital", fetch = FetchType.LAZY)
 	private List<Patient> patients;
-
+	
 	public int getHospitalId() {
 		return hospitalId;
 	}
@@ -99,7 +102,7 @@ public class Hospital implements Serializable {
 		this.hospitalName = hospitalName;
 	}
 
-	@JsonIgnore
+	@JsonGetter
 	public HospitalZone getHospitalZone() {
 		return hospitalZone;
 	}
@@ -109,7 +112,7 @@ public class Hospital implements Serializable {
 		this.hospitalZone = hospitalZone;
 	}
 
-	@JsonIgnore
+	@JsonGetter
 	public HospitalType getHospitalType() {
 		return hospitalType;
 	}
@@ -145,7 +148,7 @@ public class Hospital implements Serializable {
 		this.admins = admins;
 	}
 
-	@JsonIgnore
+	@JsonGetter
 	public List<Patient> getPatients() {
 		return patients;
 	}
@@ -156,3 +159,4 @@ public class Hospital implements Serializable {
 	}
 
 }
+
