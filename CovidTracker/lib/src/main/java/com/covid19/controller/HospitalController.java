@@ -56,6 +56,7 @@ public class HospitalController {
 		return hospitalService.findHospitalByType(typeName);
 	}
 
+	
 	// http://localhost:9090/CovidTracker.com/hospital/byType/Dahisar
 	@GetMapping(path = "/byZone/{zoneName}",produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Hospital>> getHospitalByZone(@PathVariable("zoneName") String zoneName) throws NoSuchZoneException {

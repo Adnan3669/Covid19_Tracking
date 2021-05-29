@@ -83,7 +83,8 @@ public class Hospital implements Serializable {
 	@Valid
 	// Giving OneToMany Relation Between Hospital and Patients so that One hospital
 	// have many Patients
-	@OneToMany(mappedBy = "hospital", fetch = FetchType.LAZY)
+	
+	@OneToMany(mappedBy = "hospital", fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
 	private List<Patient> patients;
 	
 	public int getHospitalId() {

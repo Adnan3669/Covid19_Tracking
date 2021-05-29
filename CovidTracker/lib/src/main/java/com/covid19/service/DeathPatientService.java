@@ -11,7 +11,8 @@ public interface DeathPatientService {
 
 	public int findDivisonWiseDeath(@NotNull String hospitalZone);
 
-	public int findAgeWiseDeath(@Positive int age);
 
 	public int findGenderWiseDeath(@Pattern(regexp = "^Male?$|^Female?$") String gender);
+
+	int findAgeWiseDeath(@Positive int fromAge, @Positive int toAge);
 }

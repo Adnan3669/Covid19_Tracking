@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.covid19.service.DeathPatientService;
@@ -51,12 +52,12 @@ public class DeathPatientController {
 	}
 
 	// http://localhost:9090/CovidTracker.com/deathstatistic/ageWiseDeath/21
-	@GetMapping(path = "/ageWiseDeath/{age}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Integer> findtotalAgeWiseDeath(@PathVariable("age") @RequestBody @Positive int age)
+	@GetMapping(path = "/ageWiseDeath", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Integer> findtotalAgeWiseDeath(@RequestParam("fromAge") @Positive int fromAge,@RequestParam("toAge") @Positive int toAge)
 	{
 		logger.info("For getting details of total age wise deaths");
 
-		return new ResponseEntity<>(deathService.findAgeWiseDeath(age), HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(deathService.findAgeWiseDeath(fromAge,toAge), HttpStatus.ACCEPTED);
 	}
 
 	// http://localhost:9090/CovidTracker.com/deathstatistic/genderWiseDeath/Male

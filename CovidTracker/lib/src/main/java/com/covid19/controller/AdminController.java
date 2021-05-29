@@ -68,11 +68,11 @@ public class AdminController {
 	 * http://localhost:9090/CovidTracker.com/admin/removeHospital
 	 */
 	@DeleteMapping(path = "/removeHospital")
-	public ResponseEntity<String> deleteHospital(@RequestParam(name = "id") @Positive int hospitalId)
+	public ResponseEntity<String> deleteHospital(@RequestParam(name = "hospitalId") @Positive int hospitalId)
 			throws NoSuchAdminException, NoSuchHospitalException {
 		logger.info("For deleting an existing HOSPITAL");
 		if (adminService.removeHospitalById(hospitalId))
-			return new ResponseEntity<>("Deletion Request Accepted Successfully", HttpStatus.ACCEPTED);
+			return new ResponseEntity<>("Deletion Request Accepted Successfully", HttpStatus.OK);
 		else {
 			return new ResponseEntity<>("Deletion Request was Unsucessful", HttpStatus.NO_CONTENT);
 		}

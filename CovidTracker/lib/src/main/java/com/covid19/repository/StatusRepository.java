@@ -81,4 +81,8 @@ public interface StatusRepository extends JpaRepository<Status, Integer> {
 	@Query("select status from Status status where status.patient.patientId=:patientId")
 	public Status findStatusByPatientId(@Param("patientId")@Positive int patientId);
 
+	@Query("Select count(s) from Status s where s.patient.patientAge between :fromAge and :toAge and s.deathDate is not null")
+
+	public int findTotalDeathByAge(@Param("fromAge")@Positive int fromAge,@Param("toAge") @Positive int toAge);
+
 }

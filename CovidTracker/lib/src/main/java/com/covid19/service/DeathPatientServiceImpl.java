@@ -42,8 +42,8 @@ public class DeathPatientServiceImpl implements DeathPatientService {
 	}
 
 	@Override
-	public int findAgeWiseDeath(@Positive int age) {
-		return statusRepository.findTotalDeathByAge(age);
+	public int findAgeWiseDeath(@Positive int fromAge,@Positive int toAge) {
+		return statusRepository.findTotalDeathByAge(fromAge,toAge);
 	}
 
 	@Override

@@ -65,10 +65,10 @@ class DeathPatientServiceTestImpl {
 		assertEquals(1,count);
 	}
 
-	@Test
-	void testfindAgeWiseDeath() {
-		int count = deathPatientService.findAgeWiseDeath(18);
-		assertEquals(1,count);
-	}
+//	@Test
+//	void testfindAgeWiseDeath() {
+//		int count = deathPatientService.findAgeWiseDeath(18);
+//		assertEquals(1,count);
+//	}
 
 }

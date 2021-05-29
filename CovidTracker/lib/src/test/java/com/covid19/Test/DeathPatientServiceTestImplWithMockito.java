@@ -66,8 +66,8 @@ class DeathPatientServiceTestImplWithMockito {
 
 	@Test
 	void testfindGenderWiseDeath() {
-		when(statusRepository.findTotalDeathByAge(18)).thenReturn(1);
-		int count = deathPatientService.findAgeWiseDeath(18);
+		when(statusRepository.findTotalDeathByAge(18,2)).thenReturn(1);
+		int count = deathPatientService.findAgeWiseDeath(18,2);
 		assertEquals(1,count);
 	}
 
@@ -101,7 +101,7 @@ class DeathPatientServiceTestImplWithMockito {
 	void testfindGenderWiseDeathThrowsConstrainViolationException() {
 		assertThrows(ConstraintViolationException.class, ()->
 		{
-			 deathPatientService.findAgeWiseDeath(-1);
+			 deathPatientService.findAgeWiseDeath(-1,-2);
 		});
 	}
 
