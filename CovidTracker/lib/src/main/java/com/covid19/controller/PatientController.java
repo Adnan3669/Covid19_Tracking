@@ -83,6 +83,7 @@ public class PatientController {
 	// http://localhost:9090/CovidTracker.com/patients/modifypatientstatus
 	@PutMapping(path = "/modifypatientstatus", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json")
 	public Status modifyPatientStatus(@RequestBody @Valid Status status) throws NoSuchStatusException, DateIsNotAppropriate {
+		System.out.println(status.getDeathDate());
 		logger.info("For modifying details of PATIENT STATUS");
 		return patientService.modifyPatientStatus(status);
 	}

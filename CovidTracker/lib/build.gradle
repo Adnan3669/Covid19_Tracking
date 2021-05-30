@@ -53,5 +53,6 @@ dependencies {
 	
 	// It is used to validate the input
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.3.4.RELEASE'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.3.4.RELEASE'
 
 }

@@ -75,11 +75,11 @@ public class Patient implements Serializable {
 	private Hospital hospital;
 
 	@Valid // allows validate object.
-	@OneToMany(mappedBy = "patient", fetch = FetchType.LAZY) // one to many association with covidTest Table.
+	@OneToMany(mappedBy = "patient", fetch = FetchType.LAZY,cascade = CascadeType.REMOVE) // one to many association with covidTest Table.
 	private List<CovidTest> covidTest;
 
 	@Valid // allows validate object,
-	@OneToMany(mappedBy = "patient", fetch = FetchType.LAZY) // one to many association with status Table.
+	@OneToMany(mappedBy = "patient", fetch = FetchType.LAZY,cascade = CascadeType.REMOVE) // one to many association with status Table.
 	private List<Status> status;
 
 	public Patient() {

@@ -1,12 +1,10 @@
 package com.covid19.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import javax.validation.constraints.Positive;
 
 import org.slf4j.Logger;
@@ -21,6 +19,7 @@ import com.covid19.entities.Hospital;
 import com.covid19.entities.HospitalType;
 import com.covid19.entities.HospitalZone;
 import com.covid19.exceptions.AdminException;
+import com.covid19.exceptions.EmailException;
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.exceptions.NoSuchHospitalException;
 import com.covid19.exceptions.NoSuchTypeException;
@@ -29,13 +28,16 @@ import com.covid19.repository.AdminRepository;
 import com.covid19.repository.HospitalRepository;
 import com.covid19.repository.HospitalTypeRepositary;
 import com.covid19.repository.HospitalZoneRepositary;
+import com.covid19.security.CryptWithMD5;
+import com.covid19.utilities.NotificationService;
+import com.covid19.utilities.RandomString;
+
 
 @Service
 @Scope("singleton")
 @Validated
 public class AdminServiceImpl implements AdminService {
-	ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-	Validator validator = factory.getValidator();
+	
 	@Autowired
 	private AdminRepository adminRepository;
 	@Autowired
@@ -46,17 +48,44 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	HospitalTypeRepositary typeRepository;
 	Logger logger = LoggerFactory.getLogger(AdminServiceImpl.class);
+@Autowired
+NotificationService notificationService;
 
 	/* This is for addingAdmin takes Admin object as Parameter */
 	@Override
-	public Admin addAdmin(@Valid Admin admin) throws AdminException {
+	public Admin addAdmin(@Valid Admin admin) throws AdminException, EmailException, NoSuchAlgorithmException {
 		logger.info("Admin Adding");
 		Admin findAdmin = adminRepository.findByAdminId(admin.getAdminId());
 		if (findAdmin == null) {
-			return adminRepository.save(admin);
-		} 
+			if(adminRepository.findByEmail(admin.getAdminEmailId())==null)
+			{
+			boolean flag=true;
+			String password=RandomString.getAlphaNumericString(8); 
+			while(flag)
+			{
+				String userName=RandomString.getAlphaNumericString(6);
+				
+				if(adminRepository.findByUserName(userName)==null)
+				{
+					admin.setAdminUserName(userName);
+					admin.setAdminPassword(CryptWithMD5.cryptWithMD5(password) );
+					adminRepository.save(admin);
+					notificationService.sendNotification(admin.getAdminEmailId(), "Admin credentials", "UserName: "+admin.getAdminUserName()+"\nPassword: "+password);
+					flag=false;
+				}
+			}
+			return admin;
+			}
+			else {
+				throw new EmailException("Email Id already exists");
+			}
+			
+		}
+		else
+		{
 		logger.warn("Entered in Admin Exception in AddAdmin");
 		throw new AdminException("Admin Already Exists");
+		}
 	}
 
 	/*
@@ -199,13 +228,19 @@ public class AdminServiceImpl implements AdminService {
 		}
 	}
 	@Override
-	public Admin getAdminCredentials(String username, String password) throws NoSuchAdminException {
-		Admin admin=adminRepository.findAdminCredentials(username, password);
+	public Admin getAdminCredentials(String username, String password) throws NoSuchAdminException, NoSuchAlgorithmException {
+		Admin admin=adminRepository.findByUserName(username);
 		if (admin == null) {
 			throw new NoSuchAdminException("No Such Admin exists");
 		}
+		else {
+			if(admin.getAdminPassword().equals(CryptWithMD5.cryptWithMD5(password)))
+			return admin;
+			else
+				throw new NoSuchAdminException("No Such Admin exists");
+
+		}
 		
-		return admin;
 	}
 
 }

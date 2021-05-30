@@ -158,6 +158,5 @@ public class Hospital implements Serializable {
 	public void setPatients(List<Patient> patients) {
 		this.patients = patients;
 	}
-
 }
 

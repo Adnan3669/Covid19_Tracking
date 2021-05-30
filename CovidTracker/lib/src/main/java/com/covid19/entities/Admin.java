@@ -50,6 +50,11 @@ public class Admin implements Serializable {
 	@NotBlank(message = "Admin First Name can't be Blank ")
 	@Column(name = "admin_fname", length = 20, nullable = false)
 	private String adminFirstName;
+	
+	@Pattern(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$",message = "Enter Correct Email Id")
+	@NotBlank(message = "Admin Email can't be Blank ")
+	@Column(name = "admin_email", length = 50, nullable = false,unique = true)
+	private String adminEmailId;
 
 
 	/*
@@ -63,14 +68,13 @@ public class Admin implements Serializable {
 	/*
 	 * Admin Password which is String and related to column admin_pass
 	 */
-	@NotBlank
-	//@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",message = "Minimum eight characters, at least one letter and one number")
+	
 	@Column(name = "admin_pass", nullable = false)
 	private String adminPassword;
 	/*
 	 * Admin UserName which is a String
 	 */
-	@NotBlank
+	
 	@Column(name = "admin_username", length = 20, nullable = false,unique =true )
 	private String adminUserName;
 
@@ -131,6 +135,14 @@ public class Admin implements Serializable {
 	@JsonIgnore
 	public void setHospitals(List<Hospital> hospitals) {
 		this.hospitals = hospitals;
+	}
+
+	public String getAdminEmailId() {
+		return adminEmailId;
+	}
+
+	public void setAdminEmailId(String adminEmailId) {
+		this.adminEmailId = adminEmailId;
 	}
 
 }

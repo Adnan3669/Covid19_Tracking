@@ -6,10 +6,15 @@ import java.util.List;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
-
+@Component
 @SpringBootApplication
 public class CovidTrackerApp {
+
+	
+
+	
 	@Bean("list")
 	public List<String>  getListOfString()
 	{
@@ -19,6 +24,7 @@ public class CovidTrackerApp {
 	public static void main(String[] args) {
 		
 		SpringApplication.run(CovidTrackerApp.class, args);
+	
 	}
 
 }

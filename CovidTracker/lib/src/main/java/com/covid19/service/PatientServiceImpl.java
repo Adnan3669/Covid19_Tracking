@@ -91,7 +91,8 @@ public class PatientServiceImpl implements PatientService {
 		if (patient != null) {                                              // if patient is not null then will add test details.
 			covidTest.setPatient(patient);
 			patientTestRepository.save(covidTest);
-			if(covidTest.getResult().equals("Positive") )
+			Status patientStatus=statusRepository.findStatusByPatientId(patientId);
+			if(covidTest.getResult().equals("Positive") &&patientStatus==null)
 			{
 			Status status =new Status();
 			status.setConfirmDate(LocalDate.now());
@@ -99,11 +100,10 @@ public class PatientServiceImpl implements PatientService {
 		return	addPatientStatus(patientId, status);
 			}
 			else {
-				Status status=statusRepository.findStatusByPatientId(patientId);
-				if(status!=null)
+				if(patientStatus!=null)
 				{
-					status.setRecoveredDate(LocalDate.now());
-					return modifyPatientStatus(status);
+					patientStatus.setRecoveredDate(LocalDate.now());
+					return modifyPatientStatus(patientStatus);
 				}
 				else {
 					return new Status();
@@ -163,7 +163,7 @@ public class PatientServiceImpl implements PatientService {
 
 		Status modifiedStatus = statusRepository.findStatusById(status.getStatusId());
 		if (modifiedStatus != null) {
-			if(status.getDeathDate()==null)
+			if(modifiedStatus.getDeathDate()==null)
 			{
 			if (((status.getConfirmDate().isBefore(status.getIsolationDate())
 					|| status.getConfirmDate().isEqual(status.getIsolationDate())) && status.getConfirmDate() != null

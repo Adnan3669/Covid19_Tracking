@@ -1,5 +1,6 @@
 package com.covid19.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -8,6 +9,7 @@ import javax.validation.constraints.Positive;
 import com.covid19.entities.Admin;
 import com.covid19.entities.Hospital;
 import com.covid19.exceptions.AdminException;
+import com.covid19.exceptions.EmailException;
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.exceptions.NoSuchHospitalException;
 import com.covid19.exceptions.NoSuchTypeException;
@@ -20,7 +22,7 @@ public interface AdminService {
 
 	public Hospital getHospitalById(@Positive int hospitalId) throws NoSuchHospitalException;
 
-	public Admin addAdmin(@Valid Admin admin) throws AdminException;
+	public Admin addAdmin(@Valid Admin admin) throws AdminException, EmailException, NoSuchAlgorithmException;
 
 	public boolean assignHospitalToAdmin(@Positive int hospitalId, @Positive int adminId);
 
@@ -31,6 +33,6 @@ public interface AdminService {
 
 	public Hospital modifyHospital(@Valid Hospital hospital) throws NoSuchHospitalException;
 
-	Admin getAdminCredentials(String username, String password) throws NoSuchAdminException;
+	Admin getAdminCredentials(String username, String password) throws NoSuchAdminException, NoSuchAlgorithmException;
 
 }

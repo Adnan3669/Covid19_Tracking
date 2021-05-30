@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import com.covid19.entities.Hospital;
 import com.covid19.entities.HospitalType;
 import com.covid19.entities.HospitalZone;
 import com.covid19.exceptions.AdminException;
+import com.covid19.exceptions.EmailException;
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.exceptions.NoSuchHospitalException;
 import com.covid19.exceptions.NoSuchTypeException;
@@ -102,7 +104,7 @@ class AdminServiceImplTest {
 
 	/* Test Case 5:-> for getAllAdmins */
 	@Test
-	void getAllAdminsTest() throws AdminException {
+	void getAllAdminsTest() throws AdminException, NoSuchAlgorithmException, EmailException {
 		adminService.addAdmin(admin);/* Done Test ->Test Case No:1 */
 		Boolean value = adminService.getAllAdmins().contains(admin);
 		assertTrue(value);
@@ -111,7 +113,7 @@ class AdminServiceImplTest {
 	/* Test Case 6:-> for addHospital */
 
 	@Test
-	void addHospitalTest() throws AdminException, NoSuchAdminException, NoSuchTypeException, NoSuchZoneException {
+	void addHospitalTest() throws AdminException, NoSuchAdminException, NoSuchTypeException, NoSuchZoneException, EmailException {
 		admin = adminService.addAdmin(admin);/* Done Test ->Test Case No:1 */
 		hospitalType.setTypeName("Corporate");
 		hospitalZone.setZoneName("Gujarat");

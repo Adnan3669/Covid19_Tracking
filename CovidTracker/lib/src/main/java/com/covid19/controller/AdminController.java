@@ -1,5 +1,6 @@
 package com.covid19.controller;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -25,6 +26,7 @@ import com.covid19.entities.Admin;
 import com.covid19.entities.Hospital;
 import com.covid19.entities.Login;
 import com.covid19.exceptions.AdminException;
+import com.covid19.exceptions.EmailException;
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.exceptions.NoSuchHospitalException;
 import com.covid19.exceptions.NoSuchTypeException;
@@ -46,7 +48,7 @@ public class AdminController {
 	 */
 	
 	@PostMapping(path = "/addAdmin", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Admin addAdmin(@Valid @RequestBody Admin admin) throws AdminException {
+	public Admin addAdmin(@Valid @RequestBody Admin admin) throws AdminException, EmailException, NoSuchAlgorithmException {
 		logger.info("For  creation of new Admin");
 		return adminService.addAdmin(admin);
 	}
@@ -139,8 +141,9 @@ public class AdminController {
 	}
 	@PostMapping(path = "/getAdminCredentials", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Admin> getAdminCredentials(@RequestBody Login login)
-			throws NoSuchAdminException {
+			throws NoSuchAdminException, NoSuchAlgorithmException {
 		return new ResponseEntity<>(adminService.getAdminCredentials(login.getUsername(),login.getPassword()), HttpStatus.OK);
 	}
+	
 
 }
