@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import com.covid19.entities.Hospital;
 import com.covid19.entities.HospitalType;
 import com.covid19.entities.HospitalZone;
 import com.covid19.exceptions.AdminException;
+import com.covid19.exceptions.EmailException;
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.exceptions.NoSuchHospitalException;
 import com.covid19.exceptions.NoSuchTypeException;
@@ -71,7 +73,7 @@ class AdminServiceImplUsingMockitoTest {
 
 	/* Test Case:1-> for AddAdmin function */
 	@Test
-	void addAdminTest() throws AdminException {
+	void addAdminTest() throws AdminException, NoSuchAlgorithmException, EmailException {
 		when(adminRepository.findByAdminId(admin.getAdminId())).thenReturn(null);
 		when(adminRepository.save(admin)).thenReturn(admin);
 

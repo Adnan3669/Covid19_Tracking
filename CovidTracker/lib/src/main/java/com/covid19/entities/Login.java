@@ -1,15 +1,11 @@
 
 package com.covid19.entities;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
 @Component
-@Entity
-@Table(name="Login")
 public class Login {
 	@Id
 	private String username;

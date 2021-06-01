@@ -67,7 +67,7 @@ class AdminServiceImplTest {
 
 	/* Test Case:1-> for AddAdmin function */
 	@Test
-	void addAdminTest() throws AdminException {
+	void addAdminTest() throws AdminException, NoSuchAlgorithmException, EmailException {
 		Admin expectedAdmin = adminService.addAdmin(admin);
 		Admin actualAdmin = adminRepository.findByAdminId(admin.getAdminId());
 		assertEquals(actualAdmin, expectedAdmin);
@@ -86,7 +86,7 @@ class AdminServiceImplTest {
 
 	/* Test Case 3:-> for getAdminByAdminTest */
 	@Test
-	void getAdminByAdminIdTest() throws AdminException, NoSuchAdminException {
+	void getAdminByAdminIdTest() throws AdminException, NoSuchAdminException, NoSuchAlgorithmException, EmailException {
 		Admin expectedAdmin = adminService.addAdmin(admin);/* Done Test ->Test Case No:1 */
 		Admin actualAdmin = adminService.getAdminById(admin.getAdminId());
 		assertEquals(expectedAdmin, actualAdmin);
@@ -113,7 +113,7 @@ class AdminServiceImplTest {
 	/* Test Case 6:-> for addHospital */
 
 	@Test
-	void addHospitalTest() throws AdminException, NoSuchAdminException, NoSuchTypeException, NoSuchZoneException, EmailException {
+	void addHospitalTest() throws AdminException, NoSuchAdminException, NoSuchTypeException, NoSuchZoneException, EmailException, NoSuchAlgorithmException {
 		admin = adminService.addAdmin(admin);/* Done Test ->Test Case No:1 */
 		hospitalType.setTypeName("Corporate");
 		hospitalZone.setZoneName("Gujarat");
@@ -129,7 +129,7 @@ class AdminServiceImplTest {
 	/* Test Case 7:-> for addHospital with NoSuchAdminException */
 	@Test
 	void addHospitalTestWithNoSuchAdminException()
-			throws NoSuchAdminException, NoSuchTypeException, NoSuchZoneException, AdminException {
+			throws NoSuchAdminException, NoSuchTypeException, NoSuchZoneException, AdminException, NoSuchAlgorithmException, EmailException {
 		admin = adminService.addAdmin(admin);/* Done Test ->Test Case No:1 */
 		hospitalType.setTypeName("Corporate");
 		hospitalZone.setZoneName("Gujarat");
@@ -144,7 +144,7 @@ class AdminServiceImplTest {
 
 	@Test
 	void addHospitalTestWithNoSuchTypeException()
-			throws NoSuchAdminException, NoSuchTypeException, NoSuchZoneException, AdminException {
+			throws NoSuchAdminException, NoSuchTypeException, NoSuchZoneException, AdminException, NoSuchAlgorithmException, EmailException {
 		admin = adminService.addAdmin(admin);/* Done Test ->Test Case No:1 */
 		hospitalType.setTypeName("Corporate");
 		hospitalZone.setZoneName("Gujarat");
@@ -159,7 +159,7 @@ class AdminServiceImplTest {
 
 	@Test
 	void addHospitalTestWithNoSuchZoneException()
-			throws NoSuchAdminException, NoSuchTypeException, NoSuchZoneException, AdminException {
+			throws NoSuchAdminException, NoSuchTypeException, NoSuchZoneException, AdminException, NoSuchAlgorithmException, EmailException {
 		admin = adminService.addAdmin(admin);/* Done Test ->Test Case No:1 */
 		hospitalType.setTypeName("Corporate");
 		hospitalZone.setZoneName("Gujarat");
@@ -174,7 +174,7 @@ class AdminServiceImplTest {
 	/* Test Case 9:-> for removeHospitalById */
 	@Test
 	void TestRemoveHospitalById() throws NoSuchAdminException, NoSuchHospitalException, NoSuchTypeException,
-			NoSuchZoneException, AdminException {
+			NoSuchZoneException, AdminException, NoSuchAlgorithmException, EmailException {
 		admin = adminService.addAdmin(admin);/* Done Test ->Test Case No:1 */
 		hospitalType.setTypeName("Corporate");
 		hospitalZone.setZoneName("Gujarat");
@@ -206,7 +206,7 @@ class AdminServiceImplTest {
 
 	@Test
 	void assignHospitalToAdminTest()
-			throws AdminException, NoSuchAdminException, NoSuchTypeException, NoSuchZoneException {
+			throws AdminException, NoSuchAdminException, NoSuchTypeException, NoSuchZoneException, NoSuchAlgorithmException, EmailException {
 		admin = adminService.addAdmin(admin);/* Done Test ->Test Case No:1 */
 		hospitalType.setTypeName("Corporate");
 		hospitalZone.setZoneName("Gujarat");
@@ -235,7 +235,7 @@ class AdminServiceImplTest {
 
 	@Test
 	void modifyHospitalTest() throws AdminException, NoSuchAdminException, NoSuchTypeException, NoSuchZoneException,
-			NoSuchHospitalException {
+			NoSuchHospitalException, NoSuchAlgorithmException, EmailException {
 		admin = adminService.addAdmin(admin);/* Done Test ->Test Case No:1 */
 		hospitalType.setTypeName("Corporate");
 		hospitalZone.setZoneName("Gujarat");
@@ -252,7 +252,7 @@ class AdminServiceImplTest {
 
 	@Test
 	void modifyHospitalTestThrowsNoSuchHospitalException() throws AdminException, NoSuchAdminException,
-			NoSuchTypeException, NoSuchZoneException, NoSuchHospitalException {
+			NoSuchTypeException, NoSuchZoneException, NoSuchHospitalException, NoSuchAlgorithmException, EmailException {
 		admin = adminService.addAdmin(admin);/* Done Test ->Test Case No:1 */
 		hospitalType.setTypeName("Corporate");
 		hospitalZone.setZoneName("Gujarat");

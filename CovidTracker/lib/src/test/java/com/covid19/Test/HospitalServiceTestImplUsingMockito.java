@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import com.covid19.entities.Hospital;
 import com.covid19.entities.HospitalType;
 import com.covid19.entities.HospitalZone;
 import com.covid19.exceptions.AdminException;
+import com.covid19.exceptions.EmailException;
 import com.covid19.exceptions.NoSuchAdminException;
 import com.covid19.exceptions.NoSuchTypeException;
 import com.covid19.exceptions.NoSuchZoneException;
@@ -53,7 +55,7 @@ public class HospitalServiceTestImplUsingMockito {
 
 	// Testing FindHospitalByType
 	@Test
-	void testfindHospitalByType() throws NoSuchAdminException, NoSuchTypeException, AdminException {
+	void testfindHospitalByType() throws NoSuchAdminException, NoSuchTypeException, AdminException, NoSuchAlgorithmException, EmailException {
 		admin.setAdminFirstName("Gaurav");
 		admin.setAdminLastName("Singh");
 		admin.setAdminUserName("gaurav");

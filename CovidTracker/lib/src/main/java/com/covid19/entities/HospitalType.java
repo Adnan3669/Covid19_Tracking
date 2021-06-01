@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Scope("prototype")
 @Component
-@Table(name = "HospitalType")
+@Table(name = "Hospital_Type")
 public class HospitalType implements Serializable {
 	
 

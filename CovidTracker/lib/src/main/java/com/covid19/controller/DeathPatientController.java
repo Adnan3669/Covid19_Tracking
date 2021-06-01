@@ -1,5 +1,7 @@
 package com.covid19.controller;
 
+import java.security.NoSuchAlgorithmException;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.covid19.security.CryptWithMD5;
 import com.covid19.service.DeathPatientService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -62,10 +65,9 @@ public class DeathPatientController {
 
 	// http://localhost:9090/CovidTracker.com/deathstatistic/genderWiseDeath/Male
 	@GetMapping(path = "/genderWiseDeath/{gender}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Integer> findtotalGenderWiseDeath(@PathVariable("gender") @RequestBody @Pattern(regexp = "^Male?$|^Female?$") String gender)
+	public ResponseEntity<Integer> findtotalGenderWiseDeath(@PathVariable("gender") @RequestBody @Pattern(regexp = "^Male?$|^Female?$") String gender) throws NoSuchAlgorithmException
 	{
 		logger.info("For getting details of total gender wise deaths");
-
 		return new ResponseEntity<>(deathService.findGenderWiseDeath(gender), HttpStatus.ACCEPTED);
 	}
 

@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "HospitalZone")
+@Table(name = "Hospital_Zone")
 @Component
 @Scope("prototype")
 public class HospitalZone implements Serializable {
@@ -39,7 +39,7 @@ public class HospitalZone implements Serializable {
 	
 	@NotBlank
 	@Pattern(regexp = "[A-Za-z0-9]+$", message = "Invalid Characters entered for Hospital Zone")
-	@Column(name = "zone_name", length = 20, nullable = false,unique = true)
+	@Column(name = "zone_name", length = 40, nullable = false,unique = true)
 	private String zoneName;
 
 	@Valid
