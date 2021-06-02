@@ -1,7 +1,5 @@
 package com.covid19.service;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.time.LocalDate;
 import java.util.List;
 
